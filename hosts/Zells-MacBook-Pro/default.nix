@@ -5,10 +5,22 @@
         config.allowUnfree = true;
   };
 
+  nix.extraOptions = ''
+    auto-optimise-store = true
+    experimental-features = nix-command flakes
+  '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+    extra-platforms = x86_64-darwin aarch64-darwin
+  '';
+
   services.nix-daemon.enable = true;
 
   programs.zsh.enable = true;
 
+  security.pam.enableSudoTouchIdAuth = true;
+
+  environment.systemPackages = [
+    pkgs.neovim
+  ];
   homebrew = {
     enable = true;
     onActivation = {
@@ -17,21 +29,20 @@
     };
 
     brews = [
-      
     ];
 
     casks = [
-     "hammerspoon"
-     "discord"
-     "logseq"
-     "raycast"
-     "slack"
-     "tuple"
-     # "tandem"
-     "warp"
-     "arc"
-     "readdle-spark"
-    "docker"
+      "cursor"
+      "hammerspoon"
+      "logseq"
+      "raycast"
+      "slack"
+      "tuple"
+      "tandem"
+      "warp"
+      "arc"
+      "readdle-spark"
+      "docker"
     ];
   };
 
