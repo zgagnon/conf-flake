@@ -211,6 +211,14 @@
         userName = "zgagnon";
         userEmail = "zell@mechanical-orchard.com";
       };
+
+      services.syncthing = {
+        enable = true;
+      };
     };
+  };
+
+  nix.settings = {
+    auto-optimise-store = true;
   };
 }
