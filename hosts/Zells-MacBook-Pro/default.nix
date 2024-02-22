@@ -5,12 +5,17 @@
         config.allowUnfree = true;
   };
 
-  nix.extraOptions = ''
-    auto-optimise-store = true
-    experimental-features = nix-command flakes
-  '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-    extra-platforms = x86_64-darwin aarch64-darwin
-  '';
+  nix = {
+    settings = {
+		  trusted-substituters = [];
+		};
+    extraOptions = ''
+			experimental-features = nix-command flakes
+      '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+			extra-platforms = x86_64-darwin aarch64-darwin
+			'';
+	};
+
 
   services.nix-daemon.enable = true;
 
@@ -32,7 +37,9 @@
     ];
 
     casks = [
+      "skype"
       "cursor"
+      "orbstack"
       "hammerspoon"
       "logseq"
       "raycast"
@@ -43,6 +50,9 @@
       "arc"
       "readdle-spark"
       "docker"
+      "spotify"
+      "google-chrome"
+      "soundsource"
     ];
   };
 
@@ -60,7 +70,10 @@
         homeDirectory = lib.mkForce "/Users/zell";
 
         packages = with pkgs; [
+          kubernetes-helm
+          google-cloud-sdk
           vscodium
+          terraform
           fasd
           discord
           neovim
@@ -93,8 +106,11 @@
 
       programs.home-manager.enable = true;
 
-      programs.direnv.enable = true;
-      programs.direnv.nix-direnv.enable = true;
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+        enableZshIntegration = true;
+      };
 
       programs.vim = {
         enable = true;
@@ -110,7 +126,7 @@
         enable = true;
         enableAutosuggestions = true;
         initExtra = builtins.concatStringsSep "\n" [
-          "export EDITOR=vim"
+          "export EDITOR=vm"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
           "eval \"$(fasd --init auto)\""
@@ -118,6 +134,8 @@
           "alias v='f -e vim'"
           "alias ls='ls -lahG'"
           "alias history='fc -l 1'"
+          "alias ms='mob start'"
+          "alias vim=nvim"
           "eval \"$(/opt/homebrew/bin/brew shellenv)\""
         ];
 
