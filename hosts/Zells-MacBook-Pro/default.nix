@@ -1,21 +1,16 @@
-{pkgs, lib, ...}:
+{ pkgs, lib, ... }:
 
-{  
-  nixpkgs = {
-        config.allowUnfree = true;
-  };
+{
+  nixpkgs = { config.allowUnfree = true; };
 
   nix = {
-    settings = {
-		  trusted-substituters = [];
-		};
+    settings = { trusted-substituters = [ ]; };
     extraOptions = ''
-			experimental-features = nix-command flakes
-      '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-			extra-platforms = x86_64-darwin aarch64-darwin
-			'';
-	};
-
+      experimental-features = nix-command flakes
+    '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+      extra-platforms = x86_64-darwin aarch64-darwin
+    '';
+  };
 
   services.nix-daemon.enable = true;
 
@@ -23,9 +18,7 @@
 
   security.pam.enableSudoTouchIdAuth = true;
 
-  environment.systemPackages = [
-    pkgs.neovim
-  ];
+  environment.systemPackages = [ pkgs.neovim ];
   homebrew = {
     enable = true;
     onActivation = {
@@ -33,14 +26,16 @@
       upgrade = true;
     };
 
-    brews = [
-    ];
+    brews = [ ];
+
+    taps = [ "homebrew/cask-fonts" ];
 
     casks = [
       "skype"
       "cursor"
       "orbstack"
       "hammerspoon"
+      "font-fira-mono-nerd-font"
       "logseq"
       "raycast"
       "slack"
@@ -56,14 +51,12 @@
     ];
   };
 
-   system.defaults = {
-      dock.autohide = true;
-  };
+  system.defaults = { dock.autohide = true; };
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = {pkgs, config, ...}: {
+    users.zell = { pkgs, config, ... }: {
       home = {
         stateVersion = "23.11";
         username = lib.mkDefault "zell";
@@ -72,10 +65,21 @@
         packages = with pkgs; [
           kubernetes-helm
           google-cloud-sdk
+          fd
           vscodium
           terraform
           fasd
+          ripgrep
+          nodejs
+          cabal-install
+          haskellPackages.hoogle
+          haskellPackages.lsp
+          erlfmt
+          nixfmt
+          shfmt
+          shellcheck
           discord
+          fira-code
           neovim
           _1password
           kubectx
@@ -84,23 +88,21 @@
         ];
 
         sessionVariables = {
-          EDITOR = "nvim";
+          EDITOR = "vim";
           SSH_AUTH_SOCK = "${config.home.homeDirectory}/.1password/agent.sock";
 
         };
 
         file.".1password/agent.sock" = lib.mkIf pkgs.stdenv.isDarwin {
           source = config.lib.file.mkOutOfStoreSymlink
-          "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+            "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
         };
       };
 
       programs.ssh = {
         enable = true;
         matchBlocks."*" = {
-          extraOptions = {
-            IdentityAgent = "~/.1password/agent.sock";
-          };
+          extraOptions = { IdentityAgent = "~/.1password/agent.sock"; };
         };
       };
 
@@ -126,17 +128,19 @@
         enable = true;
         enableAutosuggestions = true;
         initExtra = builtins.concatStringsSep "\n" [
-          "export EDITOR=vm"
+          "export EDITOR=vim"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
-          "eval \"$(fasd --init auto)\""
+          ''eval "$(fasd --init auto)"''
           "alias g=git"
           "alias v='f -e vim'"
           "alias ls='ls -lahG'"
           "alias history='fc -l 1'"
           "alias ms='mob start'"
           "alias vim=nvim"
-          "eval \"$(/opt/homebrew/bin/brew shellenv)\""
+          "alias em=\"emacsclient -t -a ''\""
+          ''eval "$(/opt/homebrew/bin/brew shellenv)"''
+          ''export PATH="$PATH:$HOME/.config/emacs/bin"''
         ];
 
         history = {
@@ -166,18 +170,21 @@
       programs.git = {
         enable = true;
         signing = {
-        key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImIyFtYh4ufxEZozn/sOLLynKbUSX7EOokdyAlyxLdD";
-        signByDefault = true;
+          key =
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImIyFtYh4ufxEZozn/sOLLynKbUSX7EOokdyAlyxLdD";
+          signByDefault = true;
         };
-
 
         aliases = {
           co = "checkout";
           st = "status";
           ci = "commit";
-          lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-          lgp = "log --pretty=format:'%C(yellow)%h%Creset - %s %C(auto)%d - %C(green)%ad - %C(blue)%an <%C(green)%ae%C(blue)>' --graph --date=local";
-          lgf = "log --pretty=format:'%C(yellow)%h %C(green)%ad %C(red)%an%Creset %s %C(auto)%d' --graph --date=local --stat";
+          lg =
+            "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+          lgp =
+            "log --pretty=format:'%C(yellow)%h%Creset - %s %C(auto)%d - %C(green)%ad - %C(blue)%an <%C(green)%ae%C(blue)>' --graph --date=local";
+          lgf =
+            "log --pretty=format:'%C(yellow)%h %C(green)%ad %C(red)%an%Creset %s %C(auto)%d' --graph --date=local --stat";
           pr = "pull --rebase --autostash";
           rum = "rebase main@{u}";
           cp = "cherry-pick";
@@ -194,49 +201,46 @@
           pop = "reset HEAD^";
           update = "ci --amend --no-edit";
           wb-set = "!git co working-branch && git reset --hard main";
-          wb-update = "! git co main && git pr && git co working-branch && git rum";
-          wb-remain = "! git co working-branch && git rum && git co main && git reset --hard working-branch && git reset HEAD^";
-          wb-wip = "! git add . && git ci -am 'WIP' && git co working-branch && git co main && git reset --hard origin/main";
+          wb-update =
+            "! git co main && git pr && git co working-branch && git rum";
+          wb-remain =
+            "! git co working-branch && git rum && git co main && git reset --hard working-branch && git reset HEAD^";
+          wb-wip =
+            "! git add . && git ci -am 'WIP' && git co working-branch && git co main && git reset --hard origin/main";
         };
         extraConfig = {
-            gpg = { format = "ssh"; };
+          gpg = { format = "ssh"; };
           "gpg \"ssh\"" = lib.mkIf pkgs.stdenv.isDarwin {
             program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
           };
-          core = {
-            hooksPath = "bin/githooks";
-          };
+          core = { hooksPath = "bin/githooks"; };
           difftool = {
             prompt = false;
             tool = "webstorm";
           };
-          merge = {
-            tool = "webstorm";
-          };
+          merge = { tool = "webstorm"; };
           "difftool \"webstorm\"" = {
-            cmd = "~/.bin/mergestorm diff $(cd $(dirname \"$LOCAL\") && pwd)/$(basename \"$LOCAL\") $(cd $(dirname \"$REMOTE\") && pwd)/$(basename \"$REMOTE\")";
+            cmd = ''
+              ~/.bin/mergestorm diff $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE")'';
             trustExitCode = true;
           };
           "mergetool \"webstorm\"" = {
             keepTemporaries = true;
-            cmd = "~/.bin/mergestorm   merge  $(cd $(dirname \"$LOCAL\") && pwd)/$(basename \"$LOCAL\") $(cd $(dirname \"$REMOTE\") && pwd)/$(basename \"$REMOTE\") $(cd $(dirname \"$BASE\") && pwd)/$(basename \"$BASE\") $(cd $(dirname \"$MERGED\") && pwd)/$(basename \"$MERGED\")";
+            cmd = ''
+              ~/.bin/mergestorm   merge  $(cd $(dirname "$LOCAL") && pwd)/$(basename "$LOCAL") $(cd $(dirname "$REMOTE") && pwd)/$(basename "$REMOTE") $(cd $(dirname "$BASE") && pwd)/$(basename "$BASE") $(cd $(dirname "$MERGED") && pwd)/$(basename "$MERGED")'';
             trustExitCode = true;
           };
-          rerere = {
-            enabled = true;
-          };
+          rerere = { enabled = true; };
         };
         userName = "zgagnon";
         userEmail = "zell@mechanical-orchard.com";
       };
 
-      services.syncthing = {
-        enable = true;
-      };
+      programs.emacs = { enable = true; };
+
+      services.syncthing = { enable = true; };
     };
   };
 
-  nix.settings = {
-    auto-optimise-store = true;
-  };
+  nix.settings = { auto-optimise-store = true; };
 }
