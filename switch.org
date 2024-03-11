@@ -1,0 +1,29 @@
+-*- mode: org; comment-use-syntax: #; -*-
+#+title:  Darwin Generation Switch Helper
+#+author: Zoe Gagnon
+#+date:  2024-02-27
+
+* Switch Script
+:PROPERTIES:
+ :header-args: :tangle switch :shebang :comments org
+ :END:
+
+A quick script to speed up switching to a new darwin generation on some Mac machines
+
+Kandji (a tool used by MO) likes to edit this and break nix control. I don't care about the kandji thing,
+so just delete it before we start.
+#+begin_src nix
+rm ~/.ssh/config
+#+end_src
+
+Switch to the new generation.
+
+#+begin_src nix
+darwin-rebuild switch --flake ~/darwin-flake/ --fallback
+#+end_src
+
+After the update, we need to source our .zshrc in this session, so place the source line in the paste buffer
+
+#+begin_src nix
+echo "source ~/.zshrc" | pbcopy
+#+end_src

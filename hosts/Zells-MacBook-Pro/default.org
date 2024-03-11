@@ -1,24 +1,29 @@
-# Default.nix
-# :PROPERTIES:
-# :header-args: :tangle default.nix :comments org
-# :END:
+-*- mode: org; comment-use-syntax: #; -*-
+#+title: Mechanical Orchard Machine
+#+author: Zoe Gagnon
+#+date:  Feb 29, 2024
+#+auto_tangle: t
 
+* Default.nix
+:PROPERTIES:
+:header-args: :tangle default.nix :comments org
+:END:
+
+#+begin_src nix
 
 { pkgs, lib, ... }:
 
 {
+#+end_src
 
-
-
-# Allow unfree packages
-
+Allow unfree packages
+#+begin_src nix
   nixpkgs = { config.allowUnfree = true; };
+#+end_src
 
-
-
-# Configuring nix on the machine. Apple Silicon Rosetta is very good, so we can run x86_64 stuff too.
-# Also add the nix daemon so that nix isn't super slow
-
+Configuring nix on the machine. Apple Silicon Rosetta is very good, so we can run x86_64 stuff too.
+Also add the nix daemon so that nix isn't super slow
+#+begin_src nix
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -32,25 +37,22 @@
   };
 
   services.nix-daemon.enable = true;
+#+end_src
 
-
-
-# Set up MacOs. Enable touch id for sudo on the console
-
+Set up MacOs. Enable touch id for sudo on the console
+#+begin_src nix
   security.pam.enableSudoTouchIdAuth = true;
   system.defaults = { dock.autohide = true; };
+#+end_src
 
-
-
-# Enable zsh and neovim globally. Need to have these available in all accounts
-
+Enable zsh and neovim globally. Need to have these available in all accounts
+#+begin_src nix
   programs.zsh.enable = true;
   environment.systemPackages = [ pkgs.neovim ];
+#+end_src
 
-
-
-# Configure Homebrew as a module of the flake
-
+Configure Homebrew as a module of the flake
+#+begin_src nix
   homebrew = {
     enable = true;
     onActivation = {
@@ -82,11 +84,10 @@
       "soundsource"
     ];
   };
+#+end_src
 
-
-
-# Configure Home Manager as a module of the flake
-
+Configure Home Manager as a module of the flake
+#+begin_src nix
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -96,10 +97,10 @@
         username = lib.mkDefault "zell";
         homeDirectory = lib.mkForce "/Users/zell";
 
+#+end_src
 
-
-# Generic packages. These are packages that are not controlled by Home Manager
-
+Generic packages. These are packages that are not controlled by Home Manager
+#+begin_src nix
         packages = with pkgs; [
           gh
           kubernetes-helm
@@ -129,11 +130,10 @@
           elixir
           elixir_ls
         ];
+#+end_src
 
-
-
-# Insert these in to every session. The SSH auth sock is to allow 1password to handle ssh for GitHub specifically, but also everything else
-
+Insert these in to every session. The SSH auth sock is to allow 1password to handle ssh for GitHub specifically, but also everything else
+#+begin_src nix
         sessionVariables = {
           EDITOR = "vim";
           SSH_AUTH_SOCK = "${config.home.homeDirectory}/.1password/agent.sock";
@@ -145,10 +145,10 @@
             "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
         };
       };
+#+end_src
 
-
-
-# SSH configuration, let Home Manager handle this, and set the 1password identity agent
+SSH configuration, let Home Manager handle this, and set the 1password identity agent
+#+begin_src nix
 
       programs.ssh = {
         enable = true;
@@ -156,28 +156,26 @@
           extraOptions = { IdentityAgent = "~/.1password/agent.sock"; };
         };
       };
+#+end_src
 
-
-
-# Home Manager manages itself
+Home Manager manages itself
+#+begin_src nix
 
       programs.home-manager.enable = true;
+#+end_src
 
-
-
-# Direnv creates per-directory. Configure it for nix, and plug it directly in to ZSH
-
+Direnv creates per-directory. Configure it for nix, and plug it directly in to ZSH
+#+begin_src nix
       programs.direnv = {
         enable = true;
         nix-direnv.enable = true;
         enableZshIntegration = true;
       };
+#+end_src
 
-
-
-# Basic VIM configuration
-# TODO: Does this currently work for NVIM?
-
+Basic VIM configuration
+TODO: Does this currently work for NVIM?
+#+begin_src nix
       programs.vim = {
         enable = true;
         settings = {
@@ -187,18 +185,18 @@
           shiftwidth = 2;
         };
       };
+#+end_src
 
+ZSH. The extra config is:
 
+v: use fasd fuzzy search to open files with vim
+ls: over-ridden to always do long format since short format is kinda useless
+ms: mob.sh start
+vim: over-ridden to always be nvim for muscle memory
+em: launch the emacs client, this short be the default way to launch itself
 
-# ZSH. The extra config is:
-
-# v: use fasd fuzzy search to open files with vim
-# ls: over-ridden to always do long format since short format is kinda useless
-# ms: mob.sh start
-# vim: over-ridden to always be nvim for muscle memory
-# em: launch the emacs client, this short be the default way to launch itself
-
-# Toss doom into the PATH so we can update the emacs config from anywhere
+Toss doom into the PATH so we can update the emacs config from anywhere
+#+begin_src nix
 
       programs.zsh = {
         enable = true;
@@ -226,81 +224,72 @@
           size = 100000;
         };
       };
+#+end_src
 
-
-
-# The git config is pretty big since this is a core tool
-
+The git config is pretty big since this is a core tool
+#+begin_src nix
       programs.git = {
         enable = true;
+#+end_src
 
-
-
-# With pairing, we want every commit to be co-authored by the people in the ensemble. Using
-# a message template with their names would make that easy
-
+With pairing, we want every commit to be co-authored by the people in the ensemble. Using
+a message template with their names would make that easy
+#+begin_src nix
         extraConfig = { commit = { template = "~/.gitmessage"; }; };
+#+end_src
 
-
-
-# The signing key comes from 1password
-
+The signing key comes from 1password
+#+begin_src nix
         signing = {
           key =
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImIyFtYh4ufxEZozn/sOLLynKbUSX7EOokdyAlyxLdD";
           signByDefault = true;
         };
+#+end_src
 
-
-
-# Aliases largely stolen from pivotal. I use this short code of git aliases rather than a chunk of shell aliases so that I can get completion and expansion
-
+Aliases largely stolen from pivotal. I use this short code of git aliases rather than a chunk of shell aliases so that I can get completion and expansion
+#+begin_src nix
         aliases = {
           co = "checkout";
           st = "status";
           ci = "commit";
-
-
-# Graph log
-
+#+end_src
+Graph log
+#+begin_src nix
           lg =
             "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
           lgp =
             "log --pretty=format:'%C(yellow)%h%Creset - %s %C(auto)%d - %C(green)%ad - %C(blue)%an <%C(green)%ae%C(blue)>' --graph --date=local";
           lgf =
             "log --pretty=format:'%C(yellow)%h %C(green)%ad %C(red)%an%Creset %s %C(auto)%d' --graph --date=local --stat";
-
-
-# Branch related aliases
-
+#+end_src
+Branch related aliases
+#+begin_src nix
           pr = "pull --rebase --autostash";
           rum = "rebase main@{u}";
           bl = "branch --list";
           ba = "branch --all";
           pf = "push --force-with-lease";
-
-
-# Commit manipulations
-
+#+end_src
+Commit manipulations
+#+begin_src nix
           pop = "reset HEAD^";
           update = "ci --amend --no-edit";
           cp = "cherry-pick";
           dfc = "diff --cached";
           rpo = "remote prune origin";
-
-
-# Stashing
-
+#+end_src
+Stashing
+#+begin_src nix
           sl = "stash list";
           sll = "stash-list";
           slll = "stash-list --full";
           ss = "stash save";
           sa = "!sh -c 'git stash apply stash@{$1}' -";
           sd = "!sh -c 'git stash drop stash@{$1}' -";
-
-
-# This part is a poor implementation of a patch queue. Probably need to revisit it
-
+#+end_src
+This part is a poor implementation of a patch queue. Probably need to revisit it
+#+begin_src nix
           wb-set = "!git co working-branch && git reset --hard main";
           wb-update =
             "! git co main && git pr && git co working-branch && git rum";
@@ -325,13 +314,13 @@
         userName = "zgagnon";
         userEmail = "zell@mechanical-orchard.com";
       };
+#+end_src
 
-
-
-# Manage syncthing
-
+Manage syncthing
+#+begin_src nix
       services.syncthing = { enable = true; };
     };
   };
 
 }
+#+end_src
