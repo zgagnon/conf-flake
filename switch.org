@@ -10,13 +10,13 @@
 
 A quick script to speed up switching to a new darwin generation on some Mac machines
 
-Delete the ssh config because home-manager can't backup when used as a module
-
+Kandji (a tool used by MO) likes to edit this and break nix control. I don't care about the kandji thing,
+so just delete it before we start.
 #+begin_src nix
 rm ~/.ssh/config
 #+end_src
 
-Switch to the new generation
+Switch to the new generation.
 
 #+begin_src nix
 darwin-rebuild switch --flake ~/darwin-flake/ --fallback
