@@ -1,12 +1,12 @@
 #----------------------50-chars------------------#
 # Title: Summary, imperative, start upper case, don't end with a period
-
 # Remember blank line between title and body.
 
 # Wrap at 72 chars. ################################## which is here:  #
 
 
 #Co-authored-by: name <user@users.noreply.github.com>
+#Co-authored-by: Kate Spinney <kate@mechanical-orchard.com>
 #Co-authored-by: Brandon Duff <brandon@mechanical-orchard.com>
 #Co-authored-by: Paul Antaki <paul.antaki@mechanical-orchard.com>
 #Co-authored-by: Douglas Blumeyer <douglas@mechanical-orchard.com>
@@ -14,3 +14,5 @@
 #Co-authored-by: German Velasco <grman@mechanical-orchard.com>
 #Co-authored-by: Adam Bray <adam@mechanical-orchard.com>
 #Co-authored-by: Luke Barbuto <luke.barbuto@gmail.com>
+#Co-authored-by: Randy Coulman <randy@mechanical-orchard.com>
+#Co-authored-by: Yuliya Kosminsky <yuliya@mechanical-orchard.com>

@@ -67,6 +67,7 @@
       "cursor"
       "orbstack"
       "hammerspoon"
+      "zoom"
       "font-fira-mono-nerd-font"
       "logseq"
       "raycast"
@@ -101,33 +102,36 @@
 # Generic packages. These are packages that are not controlled by Home Manager
 
         packages = with pkgs; [
-          gh
-          kubernetes-helm
-          google-cloud-sdk
-          fd
-          vscodium
-          terraform
-          pandoc
-          fasd
-          ripgrep
-          nodejs
+               _1password
+               action-validator
           cabal-install
-          emacs
-          haskellPackages.hoogle
-          haskellPackages.lsp
-          erlfmt
-          nixfmt
-          shfmt
-          shellcheck
+          dbeaver
           discord
-          fira-code
-          neovim
-          _1password
-          kubectx
-          mob
-          jetbrains.idea-community
           elixir
           elixir_ls
+          emacs
+          erlfmt
+          fasd
+          fd
+          fira-code
+          google-cloud-sdk
+          gnugrep
+          haskellPackages.hoogle
+          haskellPackages.lsp
+          jetbrains.idea-community
+          kubectx
+          kubernetes-helm
+          mob
+          neovim
+          nixfmt
+          nodejs
+          pandoc
+          ripgrep
+          shellcheck
+          shfmt
+          terraform
+          vscodium
+     gh
         ];
 
 
@@ -207,6 +211,7 @@
           "export EDITOR=vim"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
+          "export DOOMDIR=\"$HOME/darwin-flake/doom\""
           ''eval "$(fasd --init auto)"''
           "alias g=git"
           "alias v='f -e vim'"
@@ -317,6 +322,7 @@
           core = {
             hooksPath = "bin/githooks";
             fsmonitor = "true";
+            filemode = "true";
           };
           rerere = { enabled = true; };
           column.branch ="auto";
