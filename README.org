@@ -1,0 +1,46 @@
+-*- mode: org; comment-use-syntax: #; -*-
+#+title:  Darwin Generation Switch Helper
+#+author: Zoe Gagnon
+#+date:  2024-02-27
+
+* Flake.nix
+:PROPERTIES:
+:header-args: :tangle flake.nix :comments org
+:END:
+
+The flake.nix is the over-arching control point for the configuration. It is responsible for gathering the various package sources and applying the correct configuration for each machine.
+
+#+begin_src nix
+  {
+    description = "Machine Configuration Flake";
+#+end_src
+
+These inputs provide the channels the flake will consume
+#+begin_src nix
+    inputs = {
+      nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+      home-manager.url = "github:nix-community/home-manager/release-23.11";
+      darwin.url = "github:lnl7/nix-darwin";
+      darwin.inputs.nixpkgs.follows = "nixpkgs";
+    };
+#+end_src
+
+
+#+begin_src nix
+    outputs = { self, nixpkgs, home-manager, darwin, ... }: {
+#+end_src
+
+Configuration for the Mechanical Orchard work Macbook
+#+begin_src nix
+     darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        home-manager.darwinModules.home-manager
+        ./hosts/Zells-MacBook-Pro/default.nix
+       ];
+     };
+    };
+#+end_src
+#+begin_src nix
+  }
+#+end_src
