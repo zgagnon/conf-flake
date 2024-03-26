@@ -8,6 +8,14 @@
 (setq user-full-name "Zoe Gagnon"
       user-email-address "zell@mechanical-orchard.com")
 
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
 
 
 ;; We can then use it to set the fonts. See 'C-h v doom-font' for documentation and more examples of what they

@@ -58,7 +58,9 @@
       upgrade = true;
     };
 
-    brews = [ ];
+    brews = [
+      "exercism"
+    ];
 
     taps = [ "homebrew/cask-fonts" ];
 

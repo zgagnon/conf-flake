@@ -60,7 +60,9 @@ Configure Homebrew as a module of the flake
       upgrade = true;
     };
 
-    brews = [ ];
+    brews = [
+      "exercism"
+    ];
 
     taps = [ "homebrew/cask-fonts" ];
 
