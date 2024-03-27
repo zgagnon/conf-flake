@@ -32,6 +32,7 @@ These inputs provide the channels the flake will consume
     outputs = { self, nixpkgs, home-manager, darwin, ... }: {
 #+end_src
 
+
 Configuration for the Mechanical Orchard work Macbook [[file:hosts/Zells-MacBook-Pro/default.org]]
 #+begin_src nix
      darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem {
