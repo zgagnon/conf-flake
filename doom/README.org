@@ -1030,7 +1030,7 @@ Another book-keeper
 
 The best language to put in your langauge
 #+begin_src elisp :tangle init.el
-       ;;lua               ; one-based indices? one-based indices
+       lua               ; one-based indices? one-based indices
 #+end_src
 
 *** Markdown

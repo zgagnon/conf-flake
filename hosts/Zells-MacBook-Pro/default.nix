@@ -42,6 +42,12 @@
 
 
 
+# Add in a window manager. PaperWM is the best WM for me, and there is a Hammerspoon script that does it well
+
+
+
+
+
 # Enable zsh and neovim globally. Need to have these available in all accounts
 
   programs.zsh.enable = true;
@@ -136,6 +142,18 @@
      gh
         ];
 
+
+
+# Set up a window manager. PaperWM is my favorite, and there is a hammerspoon script for it
+
+      file = {
+        "${config.home.homeDirectory}/.hammerspoon/Spoons/PaperWM.spoon".source = pkgs.fetchgit {
+           url = "https://github.com/mogenson/PaperWM.spoon.git";
+           rev = "6f7d1609cd5e642723540065d437a7059b4a7440";
+           sha256 = "sha256-09qVq4aPRK/V8BEA5+OZRyg1aC0zuHrhcU6fUoA+1rg=";
+        };
+        "${config.home.homeDirectory}/.hammerspoon/init.lua".source = ./paperwm-init.lua;
+      };
 
 
 # Insert these in to every session. The SSH auth sock is to allow 1password to handle ssh for GitHub specifically, but also everything else

@@ -755,7 +755,7 @@ json              ; At least it ain't XML
 
 ;; The best language to put in your langauge
 
-;;lua               ; one-based indices? one-based indices
+lua               ; one-based indices? one-based indices
 
 ;; Markdown
 
