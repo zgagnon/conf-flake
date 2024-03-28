@@ -16,3 +16,16 @@
 
 (package! super-save)
 ;(use-package! super-save)
+
+
+
+;; Install alchemist cause it seems like doom didn't pull it?
+
+;;(unless (package-installed-p 'alchemist)
+;;  (package-install 'alchemist))
+(if (package-installed-p 'alchemist)
+   (progn
+    ;;  No action needed, its here
+     )
+        (package! alchemist)
+    )

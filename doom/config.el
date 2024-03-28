@@ -108,10 +108,66 @@
                   lsp-ui-sideline-ignore-duplicate t
                   lsp-ui-sideline-enable t))
 
+
+;; Setup mix for nix
+
+; (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
+
+
+
+
+;; and configure it?
+
+(use-package! alchemist
+  :hook (elixir-mode . alchemist-mode)
+  :config
+  (set-lookup-handlers! 'elixir-mode
+    :definition #'alchemist-goto-definition-at-point
+    :documentation #'alchemist-help-search-at-point)
+  (set-eval-handler! 'elixir-mode #'alchemist-eval-region)
+  (set-repl-handler! 'elixir-mode #'alchemist-iex-project-run)
+  (setq alchemist-mix-env "dev")
+  (setq alchemist-hooks-compile-on-save t)
+  (map! :map elixir-mode-map :nv "m" alchemist-mode-keymap))
+
+
+
+;; rHighlights *.elixir2 as well
+
+(add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
+ ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+(add-hook 'elixir-mode-hook
+          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+
 (setq lsp-elixir-fetch-deps nil)
 (setq lsp-elixir-suggest-specs t)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
+
+
+
+;; Compile and test on save
+
+(setq alchemist-hooks-test-on-save t)
+(setq alchemist-hooks-compile-on-save t)
+
+
+
+;; Set some global LSP options as well
+
+(after! lsp-ui (
+setq lsp-lens-enable t
+lsp-ui-peek-enable t
+lsp-ui-doc-enable nil
+lsp-ui-doc-position 'bottom
+lsp-ui-doc-max-height 70
+lsp-ui-doc-max-width 150
+lsp-ui-sideline-show-diagnostics t
+lsp-ui-sideline-show-hover nil
+lsp-ui-sideline-show-code-actions t
+lsp-ui-sideline-diagnostic-max-lines 20
+lsp-ui-sideline-ignore-duplicate t
+lsp-ui-sideline-enable t))
 
 
 
