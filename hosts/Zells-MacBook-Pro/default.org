@@ -43,10 +43,6 @@ Set up MacOs. Enable touch id for sudo on the console
 #+begin_src nix
   security.pam.enableSudoTouchIdAuth = true;
   system.defaults = { dock.autohide = true; };
-
-Add in a window manager. PaperWM is the best WM for me, and there is a Hammerspoon script that does it well
-#+begin_src nix
-
 #+end_src
 
 Enable zsh and neovim globally. Need to have these available in all accounts
@@ -151,6 +147,11 @@ Set up a window manager. PaperWM is my favorite, and there is a hammerspoon scri
            sha256 = "sha256-09qVq4aPRK/V8BEA5+OZRyg1aC0zuHrhcU6fUoA+1rg=";
         };
         "${config.home.homeDirectory}/.hammerspoon/init.lua".source = ./paperwm-init.lua;
+#+end_src
+
+Add the custom git message with all the MO friends in it
+#+begin_src nix
+        "${config.home.homeDirectory}/.gitmessage".source = ./.gitmessage;
       };
 #+end_src
 Insert these in to every session. The SSH auth sock is to allow 1password to handle ssh for GitHub specifically, but also everything else

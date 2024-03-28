@@ -42,12 +42,6 @@
 
 
 
-# Add in a window manager. PaperWM is the best WM for me, and there is a Hammerspoon script that does it well
-
-
-
-
-
 # Enable zsh and neovim globally. Need to have these available in all accounts
 
   programs.zsh.enable = true;
@@ -153,6 +147,12 @@
            sha256 = "sha256-09qVq4aPRK/V8BEA5+OZRyg1aC0zuHrhcU6fUoA+1rg=";
         };
         "${config.home.homeDirectory}/.hammerspoon/init.lua".source = ./paperwm-init.lua;
+
+
+
+# Add the custom git message with all the MO friends in it
+
+        "${config.home.homeDirectory}/.gitmessage".source = ./.gitmessage;
       };
 
 
