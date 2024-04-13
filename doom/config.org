@@ -283,11 +283,11 @@ Show a ~ in the left fringe to indicate empty lines
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 #+end_src
 
-*** Window Select
+*** TODO Window Select
 
-Use the mouse to switch window
+Where we're going, we don't need mouse
 #+begin_src elisp :tangle init.el
-       ;;window-select     ; visually switch windows
+        window-select     ; visually switch windows
 #+end_src
 
 *** Workspaces
@@ -315,8 +315,7 @@ Tab Width
  #+end_src
 
 
- Set a more reasonable default for opening a new client windw. The very small window
- causes a lot of thrash when the window manager grabs a hold of it
+ Set a more reasonable default for opening a new client window. The very small window causes a lot of thrash when the window manager grabs a hold of it
  #+begin_src elisp :tangle config.el
 
 (if (display-graphic-p)
@@ -354,6 +353,9 @@ In order for it to hook in to org mode, we need to load it after that
 
 (after! org
   (super-save-mode +1))
+
+(setq super-save-auto-save-when-idle t)
+(setq auto-save-default nil)
  #+end_src
 
 *** EVIL
@@ -442,7 +444,7 @@ Self explanatory
 
 ** Emacs
 
-This section of modules changes the way emacs works itsuls
+This section of modules changes the way emacs works
 #+begin_src elisp :tangle init.el
        :emacs
 #+end_src
@@ -846,6 +848,19 @@ I guess its fine for work
        (elixir +lsp)            ; erlang done right
 #+end_src
 
+
+Add ".elixir2" files to the list of files that trigger the mode
+ #+begin_src elisp :tangle config.el
+(add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
+ ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+;(add-hook 'elixir-mode-hook
+;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+ #+end_src
+
+
+**** Alchemist
+An elixir mode for interacting with mix. Can compile and run tests.
+
 Install alchemist cause it seems like doom didn't pull it?
 #+begin_src elisp :tangle packages.el
 ;;(unless (package-installed-p 'alchemist)
@@ -857,12 +872,12 @@ Install alchemist cause it seems like doom didn't pull it?
         (package! alchemist)
     )
 #+end_src
+
+
 Setup mix for nix
 #+begin_src elisp :tangle config.el
-; (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
-
+ (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
 #+end_src
-
 
 and configure it?
 #+begin_src elisp :tangle config.el
@@ -875,32 +890,18 @@ and configure it?
   (set-eval-handler! 'elixir-mode #'alchemist-eval-region)
   (set-repl-handler! 'elixir-mode #'alchemist-iex-project-run)
   (setq alchemist-mix-env "dev")
-  (setq alchemist-hooks-compile-on-save t)
   (map! :map elixir-mode-map :nv "m" alchemist-mode-keymap))
-
 #+end_src
 
-rHighlights *.elixir2 as well
- #+begin_src elisp :tangle config.el
-(add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
- ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
- #+end_src
+**** LSP
 
-
+Configure some LSP options
 #+begin_src elisp :tangle config.el
 (setq lsp-elixir-fetch-deps nil)
-(setq lsp-elixir-suggest-specs t)
+(setq lsp-elixir-suggest-specs nil)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
 #+end_src
-
- Compile and test on save
- #+begin_src elisp :tangle config.el
-(setq alchemist-hooks-test-on-save t)
-(setq alchemist-hooks-compile-on-save t)
- #+end_src
 
 Set some global LSP options as well
 #+begin_src elisp :tangle config.el
@@ -919,6 +920,16 @@ lsp-ui-sideline-ignore-duplicate t
 lsp-ui-sideline-enable t))
 #+end_src
 
+**** Copilot
+
+Add a copilot indentation for elixir
+#+begin_src elisp :tangle config.el
+
+(defvar universal-indent 2)
+
+(after! (evil copilot)
+  (add-to-list 'copilot-indentation-alist '("elixir-mode" universal-indent)))
+#+end_src
 
 *** ELM
 Someone wanted haskell for flux loop
@@ -1272,7 +1283,7 @@ Standalone low-level language of lua
 
 Web?
 #+begin_src elisp :tangle init.el
-       ;;web               ; the tubes
+       web               ; the tubes
 #+end_src
 
 *** YAML

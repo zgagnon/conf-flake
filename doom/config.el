@@ -78,6 +78,9 @@
 (after! org
   (super-save-mode +1))
 
+(setq super-save-auto-save-when-idle t)
+(setq auto-save-default nil)
+
 
 
 ;; Set up ibuffer with projectile sorting
@@ -108,10 +111,21 @@
                   lsp-ui-sideline-enable t))
 
 
+
+
+;; Add ".elixir2" files to the list of files that trigger the mode
+
+(add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
+ ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
+;(add-hook 'elixir-mode-hook
+;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+
+
+
+
 ;; Setup mix for nix
 
-; (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
-
+(setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
 
 
 
@@ -126,29 +140,16 @@
   (set-eval-handler! 'elixir-mode #'alchemist-eval-region)
   (set-repl-handler! 'elixir-mode #'alchemist-iex-project-run)
   (setq alchemist-mix-env "dev")
-  (setq alchemist-hooks-compile-on-save t)
   (map! :map elixir-mode-map :nv "m" alchemist-mode-keymap))
 
+;; LSP
 
-
-;; rHighlights *.elixir2 as well
-
-(add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
- ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
-(add-hook 'elixir-mode-hook
-          (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
+;; Configure some LSP options
 
 (setq lsp-elixir-fetch-deps nil)
-(setq lsp-elixir-suggest-specs t)
+(setq lsp-elixir-suggest-specs nil)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
-
-
-
-;; Compile and test on save
-
-(setq alchemist-hooks-test-on-save t)
-(setq alchemist-hooks-compile-on-save t)
 
 
 
@@ -167,6 +168,15 @@ lsp-ui-sideline-show-code-actions t
 lsp-ui-sideline-diagnostic-max-lines 20
 lsp-ui-sideline-ignore-duplicate t
 lsp-ui-sideline-enable t))
+
+;; Copilot
+
+;; Add a copilot indentation for elixir
+
+(defvar universal-indent 2)
+
+(after! (evil copilot)
+  (add-to-list 'copilot-indentation-alist '("elixir-mode" universal-indent)))
 
 
 

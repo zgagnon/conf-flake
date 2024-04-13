@@ -26,7 +26,7 @@ Also add the nix daemon so that nix isn't super slow
 #+begin_src nix
   nix = {
     settings = {
-      auto-optimise-store = true;
+      auto-optimise-store = false;
       trusted-substituters = [ ];
     };
     extraOptions = ''
@@ -69,6 +69,7 @@ Configure Homebrew as a module of the flake
     casks = [
       "skype"
       "cursor"
+      "notion"
       "orbstack"
       "hammerspoon"
       "zoom"
@@ -236,9 +237,12 @@ Toss doom into the PATH so we can update the emacs config from anywhere
           "alias ms='mob start'"
           "alias vim=nvim"
           "alias em=\"emacsclient -t -a ''\""
+          "alias clean-branches='git for-each-ref --format=\"%(refname:short)\" refs/heads | grep -v main | xargs -L1 git branch -D'"
+          "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
+          "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
           ''eval "$(/opt/homebrew/bin/brew shellenv)"''
           ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake"''
-        ];
+                ];
 
         history = {
           ignoreSpace = true;

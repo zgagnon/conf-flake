@@ -17,7 +17,8 @@
 (package! super-save)
 ;(use-package! super-save)
 
-
+;; Alchemist
+;; An elixir mode for interacting with mix. Can compile and run tests.
 
 ;; Install alchemist cause it seems like doom didn't pull it?
 

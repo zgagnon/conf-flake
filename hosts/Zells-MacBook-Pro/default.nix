@@ -21,7 +21,7 @@
 
   nix = {
     settings = {
-      auto-optimise-store = true;
+      auto-optimise-store = false;
       trusted-substituters = [ ];
     };
     extraOptions = ''
@@ -67,6 +67,7 @@
     casks = [
       "skype"
       "cursor"
+      "notion"
       "orbstack"
       "hammerspoon"
       "zoom"
@@ -240,9 +241,12 @@
           "alias ms='mob start'"
           "alias vim=nvim"
           "alias em=\"emacsclient -t -a ''\""
+          "alias clean-branches='git for-each-ref --format=\"%(refname:short)\" refs/heads | grep -v main | xargs -L1 git branch -D'"
+          "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
+          "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
           ''eval "$(/opt/homebrew/bin/brew shellenv)"''
           ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake"''
-        ];
+                ];
 
         history = {
           ignoreSpace = true;

@@ -195,11 +195,11 @@ treemacs          ; a project drawer, like neotree but cooler
 
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 
-;; Window Select
+;; TODO Window Select
 
-;; Use the mouse to switch window
+;; Where we're going, we don't need mouse
 
-;;window-select     ; visually switch windows
+window-select     ; visually switch windows
 
 ;; Workspaces
 
@@ -293,7 +293,7 @@ snippets          ; my elves. They type so I don't have to
 
 ;; Emacs
 
-;; This section of modules changes the way emacs works itsuls
+;; This section of modules changes the way emacs works
 
 :emacs
 
@@ -898,7 +898,7 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 
 ;; Web?
 
-;;web               ; the tubes
+web               ; the tubes
 
 ;; YAML
 
