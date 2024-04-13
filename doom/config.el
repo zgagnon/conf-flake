@@ -58,8 +58,7 @@
 
 
 
-;; Set a more reasonable default for opening a new client windw. The very small window
-;; causes a lot of thrash when the window manager grabs a hold of it
+;; Set a more reasonable default for opening a new client window. The very small window causes a lot of thrash when the window manager grabs a hold of it
 
 (if (display-graphic-p)
     (progn
