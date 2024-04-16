@@ -1,12 +1,6 @@
-;; DOOM Files
-;; :PROPERTIES:
-;; :header-args: :comments org
-;; :END:
-
-;; The ==init.el== file controls installed modules and order is important.
-
-
 ;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
+
+(setq +literate-config-file "README.org")
 
 (doom! :input
 

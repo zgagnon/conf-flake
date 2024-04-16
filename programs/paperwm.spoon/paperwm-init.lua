@@ -1,4 +1,5 @@
 PaperWM = hs.loadSpoon("PaperWM")
+PaperWM.window_ratios = { 0.25, 0.23607, 0.38195, 0.5, 0.61804, 0.75 }
 PaperWM:bindHotkeys({
     -- switch to a new focused window in tiled grid
   focus_left  = {{"ctrl", "alt", "cmd"}, "left"},

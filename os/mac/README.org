@@ -1,0 +1,12 @@
+* MacOS
+:PROPERTIES:
+:header-args: :tangle default.nix
+:END:
+
+#+begin_src nix
+{ ... }: {
+  security.pam.enableSudoTouchIdAuth = true;
+  system.defaults = { dock.autohide = true; };
+}
+
+#+end_src

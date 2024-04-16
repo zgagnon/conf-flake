@@ -1,0 +1,54 @@
+* ZSH
+:PROPERTIES:
+:header-args: :tangle default.nix
+:END:
+
+
+The main shell
+
+** Configuration
+v: use fasd fuzzy search to open files with vim
+ls: over-ridden to always do long format since short format is kinda useless
+ms: mob.sh start
+vim: over-ridden to always be nvim for muscle memory
+em: launch the emacs client, this short be the default way to launch itself
+
+Toss doom into the PATH so we can update the emacs config from anywhere
+
+#+begin_src nix
+
+{...}:
+{
+  home-manager.users.zell.programs.zsh = {
+        enable = true;
+        enableAutosuggestions = true;
+        initExtra = builtins.concatStringsSep "\n" [
+          "export EDITOR=vim"
+          "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
+          "export NIXPKGS_ALLOW_UNFREE=1"
+          "export DOOMDIR=\"$HOME/darwin-flake/doom\""
+          ''eval "$(fasd --init auto)"''
+          "alias g=git"
+          "alias v='f -e vim'"
+          "alias ls='ls -lahG'"
+          "alias history='fc -l 1'"
+          "alias ms='mob start'"
+          "alias vim=nvim"
+          "alias em=\"emacsclient -t -a ''\""
+          "alias clean-branches='git for-each-ref --format=\"%(refname:short)\" refs/heads | grep -v main | xargs -L1 git branch -D'"
+          "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
+          "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
+          ''eval "$(/opt/homebrew/bin/brew shellenv)"''
+          ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake"''
+                ];
+
+        history = {
+          ignoreSpace = true;
+          ignoreDups = true;
+          save = 100000;
+          size = 100000;
+        };
+      };
+
+}
+#+end_src

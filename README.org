@@ -2,11 +2,9 @@
 #+author: Zoe Gagnon
 #+date:  2024-02-27
 
-*
-
 * Flake.nix
 :PROPERTIES:
-:header-args: :tangle flake.nix :comments org
+:header-args: :tangle flake.nix
 :END:
 
 
@@ -50,28 +48,68 @@ Configuration for the Mechanical Orchard work Macbook [[file:hosts/Zells-MacBook
 
 * Switch Script
 :PROPERTIES:
- :header-args: :tangle switch :shebang :comments org
+ :header-args: :tangle switch :shebang
  :END:
 
+** Deleting externally modified files
 A quick script to speed up switching to a new darwin generation on some Mac machines
 
 Kandji (a tool used by MO) likes to edit this and break nix control. I don't care about the kandji thing,
 so just delete it before we start.
-#+begin_src nix
-rm ~/.ssh/config
+#+begin_src shell
+config_file="$HOME/.ssh/config"
+
+if [ -f "$config_file" ]; then
+  echo "Deleting existing SSH config file: $config_file"
+  rm "$config_file"
+else
+  echo "No existing SSH config file found."
+fi
 #+end_src
 
-Switch to the new generation.
+** Tangling the literate config files
+#+begin_src sh
+SCRIPT_PATH="${BASH_SOURCE:-$0}"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 
-#+begin_src nix
+tangle_org() {
+  local file="$1"
+  printf "\033[1;34m%s\033[0m\n" "$file"
+  emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
+}
+
+echo "$MODIFIED"
+(
+  cd "$SCRIPT_DIR" || exit
+
+  for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+    tangle_org "$file"
+  done
+)
+
+#+end_src
+
+** Switching to the new generaton
+
+#+begin_src sh
 darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 #+end_src
 
+** Commit the generation config
+
+#+begin_src sh
+commit_message=$(date)
+git add .
+git commit -m "$commit_message"
+#+end_src
+
+** Update shell session
 After the update, we need to source our .zshrc in this session, so place the source line in the paste buffer
 
-#+begin_src nix
+#+begin_src sh
 echo "source ~/.zshrc" | pbcopy
 #+end_src
+
 
 * DOOM Emacs
 

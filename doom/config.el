@@ -1,9 +1,3 @@
-
-
-;; The ==config.el== hosts all of the user-configuration
-
-;; Some functionality depends on user-name and email, so we'll set that at the top
-
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 (setq user-full-name "Zoe Gagnon"
       user-email-address "zell@mechanical-orchard.com")
@@ -78,7 +72,6 @@
 (after! org
   (super-save-mode +1))
 
-(setq super-save-auto-save-when-idle t)
 (setq auto-save-default nil)
 
 
@@ -91,24 +84,6 @@
             (ibuffer-projectile-set-filter-groups)
             (unless (eq ibuffer-sorting-mode 'alphabetic)
               (ibuffer-do-sort-by-alphabetic))))
-
-
-
-;; Set global LSP options
-
-(after! lsp-mode (
-                  setq lsp-lens-enable t
-                  lsp-ui-peek-enable t
-                  lsp-ui-doc-enable nil
-                  lsp-ui-doc-position 'bottom
-                  lsp-ui-doc-max-height 70
-                  lsp-ui-doc-max-width 150
-                  lsp-ui-sideline-show-diagnostics t
-                  lsp-ui-sideline-show-hover nil
-                  lsp-ui-sideline-show-code-actions t
-                  lsp-ui-sideline-diagnostic-max-lines 20
-                  lsp-ui-sideline-ignore-duplicate t
-                  lsp-ui-sideline-enable t))
 
 
 
@@ -176,7 +151,7 @@ lsp-ui-sideline-enable t))
 (defvar universal-indent 2)
 
 (after! (evil copilot)
-  (add-to-list 'copilot-indentation-alist '("elixir-mode" universal-indent)))
+  (add-to-list 'copilot-indentation-alist '(elixir-mode universal-indent)))
 
 
 

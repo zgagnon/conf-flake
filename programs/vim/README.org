@@ -1,0 +1,20 @@
+* VIM
+:PROPERTIES:
+:header-args: :tangle default.nix
+:END:
+
+#+begin_src nix
+{ ... }: {
+  home-manager.users.zell.programs.vim = {
+    enable = true;
+    settings = {
+      number = true;
+      tabstop = 2;
+      expandtab = true;
+      shiftwidth = 2;
+    };
+  };
+
+}
+
+#+end_src
