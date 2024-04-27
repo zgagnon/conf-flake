@@ -10,29 +10,30 @@
 
 The flake.nix is the over-arching control point for the configuration. It is responsible for gathering the various package sources and applying the correct configuration for each machine.
 
+** Inputs
+The inputs to the flake are:
+- nixpkgs: the main nix repository. I prefer to follow unstable for everything
+- home-manager: individual environment + dotfiles management
+- darwin: nix for MacOS specifialy. Its a set of binaries and a repository
+
+** Machines
+The machines configured are:
+- My work laptop: [[file:hosts/Zells-MacBook-Pro][MO Machine]]
+
+** What this does
+This flake defines a set of machine-specific configurations. It takes as input the inputs listed above,
+and outputs a [[https://nixos.wiki/wiki/NixOS_modules][Nix Module]] with one configuration per machine. When the flake is switched to, the configuration
+will be determined by the host name. Each configuration includes home manager, as well as the configuration specific to that host
 #+begin_src nix
   {
     description = "Machine Configuration Flake";
-#+end_src
-
-These inputs provide the channels the flake will consume
-#+begin_src nix
     inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
       home-manager.url = "github:nix-community/home-manager/release-23.11";
       darwin.url = "github:lnl7/nix-darwin";
       darwin.inputs.nixpkgs.follows = "nixpkgs";
     };
-#+end_src
-
-
-#+begin_src nix
     outputs = { self, nixpkgs, home-manager, darwin, ... }: {
-#+end_src
-
-
-Configuration for the Mechanical Orchard work Macbook [[file:hosts/Zells-MacBook-Pro/default.org]]
-#+begin_src nix
      darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
@@ -41,8 +42,6 @@ Configuration for the Mechanical Orchard work Macbook [[file:hosts/Zells-MacBook
        ];
      };
     };
-#+end_src
-#+begin_src nix
   }
 #+end_src
 
@@ -68,6 +67,12 @@ fi
 #+end_src
 
 ** Tangling the literate config files
+This file is also the source code for the script (and the flake). All the other source code is in
+similar files. We need to remove the source code from the docs and put it into the appropriate files,
+a process called `tangling` (this style of programming is called [[https://en.wikipedia.org/wiki/Literate_programming][Literate Programming]]). Here, we ask
+git for the list of unstaged modified files, and tangle those specifically. After it finishes, we can stage
+those files.
+
 #+begin_src sh
 SCRIPT_PATH="${BASH_SOURCE:-$0}"
 SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
@@ -78,28 +83,26 @@ tangle_org() {
   emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
 }
 
-echo "$MODIFIED"
-(
-  cd "$SCRIPT_DIR" || exit
+for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+  tangle_org "$file"
+done
 
-  for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
-    tangle_org "$file"
-  done
-)
-
+git add .
 #+end_src
 
 ** Switching to the new generaton
 
+Here we switch to the new generation. This is when the machine is brought in line with the config
 #+begin_src sh
 darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 #+end_src
 
 ** Commit the generation config
 
+Finally, we can commit the current config. This way, when we roll back to a previous generation, we can
+roll back to the previous config.
 #+begin_src sh
 commit_message=$(date)
-git add .
 git commit -m "$commit_message"
 #+end_src
 

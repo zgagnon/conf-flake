@@ -16,19 +16,15 @@ tangle_org() {
   emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
 }
 
-echo "$MODIFIED"
-(
-  cd "$SCRIPT_DIR" || exit
+for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+  tangle_org "$file"
+done
 
-  for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
-    tangle_org "$file"
-  done
-)
+git add .
 
 darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 
 commit_message=$(date)
-git add .
 git commit -m "$commit_message"
 
 echo "source ~/.zshrc" | pbcopy
