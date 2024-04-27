@@ -4,6 +4,18 @@
 :END:
 
 ** Base System
+
+*** Dependencies:
+- [[file:../../system/README.org][Nix Config]]
+- [[file:../../os/mac/README.org][MacOS Specific Config]]
+- [[file:../../programs/direnv/README.org][Direnv]] a tool to switch environments per-directory
+- [[file:../../programs/zsh/README.org][ZSH]]
+- [[file:../../programs/vim/README.org][VIM]]
+- [[file:../../programs/paperwm.spoon/README.org][PaperWM.spoon]] a [[https://www.hammerspoon.org/][Hammerspoon]] implementation of [[https://github.com/paperwm/PaperWM][PaperWM]] tiling window manager
+- [[Homebrew]]
+- [[file:../../programs/git/README.org][GIT]]
+
+Binaries are installed via brew and home manager and are listed below
 #+begin_src nix :tangle default.nix
 { pkgs, lib, ... }:
 let
@@ -47,6 +59,7 @@ in {
 #+end_src
 
 ** Homebrew Installs
+These packages are installed via homebrew
 
 #+begin_src nix :tangle ./homebrew.nix
 {
@@ -80,6 +93,7 @@ in {
 #+end_src
 
 ** Home Manager Installs
+These packages are installed via nix itself
 
 #+begin_src nix :tangle ./home-manager.nix
 { pkgs, ... }:
