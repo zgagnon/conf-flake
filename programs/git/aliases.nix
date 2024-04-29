@@ -2,6 +2,7 @@
   co = "checkout";
   st = "status";
   ci = "commit";
+  l  = "!. ~/.githelpers && pretty_git_log";
   lg =
     "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
   lgp =

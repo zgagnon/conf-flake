@@ -3,6 +3,7 @@ aliases = import ./aliases.nix;
     in{
   home-manager.users.zell.home.file = {
     "${homeDirectory}/.gitmessage".source = gitmessage;
+    "${homeDirectory}/.githelpers".source = ./.githelpers;
   };
   home-manager.users.zell.programs.git = {
     aliases = aliases;

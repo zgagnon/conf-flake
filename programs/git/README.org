@@ -12,6 +12,7 @@ These git aliases are largely copied from Pivotal. I favor short codes in git ra
   co = "checkout";
   st = "status";
   ci = "commit";
+  l  = "!. ~/.githelpers && pretty_git_log";
   lg =
     "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
   lgp =
@@ -37,13 +38,14 @@ These git aliases are largely copied from Pivotal. I favor short codes in git ra
 }
 #+end_src
 
-
+** The Git Module
 #+begin_src nix
 { lib, gitmessage, pkgs, homeDirectory, email, ... }: let
 aliases = import ./aliases.nix;
     in{
   home-manager.users.zell.home.file = {
     "${homeDirectory}/.gitmessage".source = gitmessage;
+    "${homeDirectory}/.githelpers".source = ./.githelpers;
   };
   home-manager.users.zell.programs.git = {
     aliases = aliases;
