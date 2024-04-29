@@ -3,41 +3,6 @@
 :header-args: :tangle default.nix
 :END:
 
-** PROJ Aliases
-
-These git aliases are largely copied from Pivotal. I favor short codes in git rather than shell aliases to keep them domain-specific
-
-#+begin_src nix :tangle aliases.nix
-{
-  co = "checkout";
-  st = "status";
-  ci = "commit";
-  l  = "!. ~/.githelpers && pretty_git_log";
-  lg =
-    "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
-  lgp =
-    "log --pretty=format:'%C(yellow)%h%Creset - %s %C(auto)%d - %C(green)%ad - %C(blue)%an <%C(green)%ae%C(blue)>' --graph --date=local";
-  lgf =
-    "log --pretty=format:'%C(yellow)%h %C(green)%ad %C(red)%an%Creset %s %C(auto)%d' --graph --date=local --stat";
-  pr = "pull --rebase --autostash";
-  rum = "rebase main@{u}";
-  bl = "branch --list";
-  ba = "branch --all";
-  pf = "push --force-with-lease";
-  pop = "reset HEAD^";
-  update = "ci --amend --no-edit";
-  cp = "cherry-pick";
-  dfc = "diff --cached";
-  rpo = "remote prune origin";
-  sl = "stash list";
-  sll = "stash-list";
-  slll = "stash-list --full";
-  ss = "stash save";
-  sa = "!sh -c 'git stash apply stash@{$1}' -";
-  sd = "!sh -c 'git stash drop stash@{$1}' -";
-}
-#+end_src
-
 ** The Git Module
 #+begin_src nix
 { lib, gitmessage, pkgs, homeDirectory, email, ... }: let
@@ -45,7 +10,6 @@ aliases = import ./aliases.nix;
     in{
   home-manager.users.zell.home.file = {
     "${homeDirectory}/.gitmessage".source = gitmessage;
-    "${homeDirectory}/.githelpers".source = ./.githelpers;
   };
   home-manager.users.zell.programs.git = {
     aliases = aliases;
@@ -66,6 +30,7 @@ aliases = import ./aliases.nix;
         fsmonitor = "true";
         filemode = "true";
       };
+      push.autoSetupRemote = false;
       rerere = { enabled = true; };
       column.branch = "auto";
       maintenance.strategy = "incremental";
@@ -73,5 +38,40 @@ aliases = import ./aliases.nix;
     userName = "zgagnon";
     userEmail = email;
   };
+}
+#+end_src
+
+** Aliases
+
+These git aliases are largely copied from Pivotal. I favor short codes in git rather than shell aliases to keep them domain-specific
+
+#+begin_src nix :tangle aliases.nix
+{
+  co = "checkout";
+  st = "status";
+  ci = "commit -v";
+  lg =
+    "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+  lgp =
+    "log --pretty=format:'%C(yellow)%h%Creset - %s %C(auto)%d - %C(green)%ad - %C(blue)%an <%C(green)%ae%C(blue)>' --graph --date=local";
+  lgf =
+    "log --pretty=format:'%C(yellow)%h %C(green)%ad %C(red)%an%Creset %s %C(auto)%d' --graph --date=local --stat";
+  pr = "pull --rebase --autostash";
+  rum = "rebase main@{u}";
+  bl = "branch --list";
+  ba = "branch --all";
+  pf = "push --force-with-lease";
+  pop = "reset HEAD^";
+  update = "ci --amend --no-edit";
+  edit = "ci --amend";
+  cp = "cherry-pick";
+  dfc = "diff --cached";
+  rpo = "remote prune origin";
+  sl = "stash list";
+  sll = "stash-list";
+  slll = "stash-list --full";
+  ss = "stash save";
+  sa = "!sh -c 'git stash apply stash@{$1}' -";
+  sd = "!sh -c 'git stash drop stash@{$1}' -";
 }
 #+end_src

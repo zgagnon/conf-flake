@@ -3,7 +3,6 @@ aliases = import ./aliases.nix;
     in{
   home-manager.users.zell.home.file = {
     "${homeDirectory}/.gitmessage".source = gitmessage;
-    "${homeDirectory}/.githelpers".source = ./.githelpers;
   };
   home-manager.users.zell.programs.git = {
     aliases = aliases;
@@ -24,6 +23,7 @@ aliases = import ./aliases.nix;
         fsmonitor = "true";
         filemode = "true";
       };
+      push.autoSetupRemote = false;
       rerere = { enabled = true; };
       column.branch = "auto";
       maintenance.strategy = "incremental";

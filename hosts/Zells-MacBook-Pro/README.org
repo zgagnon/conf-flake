@@ -17,7 +17,7 @@
 
 Binaries are installed via brew and home manager and are listed below
 #+begin_src nix :tangle default.nix
-{ pkgs, lib, ... }:
+{ pkgs, lib,  ... }:
 let
   homebrew = import ./homebrew.nix;
   homeDirectory = "/Users/zell";
@@ -36,12 +36,14 @@ in {
     (import ../../programs/git {
       inherit lib gitmessage pkgs homeDirectory email;
     })
+    (import ../../programs/git/column-log { inherit homeDirectory; })
   ];
+
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = { pkgs, config, ... }: {
+    users.zell = { pkgs, config, emacs-ng, ... }: {
       imports = [ ../../programs/1password ];
       home = {
         stateVersion = "23.11";
@@ -96,10 +98,11 @@ These packages are installed via homebrew
 These packages are installed via nix itself
 
 #+begin_src nix :tangle ./home-manager.nix
-{ pkgs, ... }:
+{ pkgs,... }:
 with pkgs; [
   _1password
   action-validator
+  anki-bin
   cabal-install
   dbeaver
   discord
@@ -126,8 +129,9 @@ with pkgs; [
   shellcheck
   shfmt
   terraform
+  tree-sitter
+  tree-sitter-grammars.tree-sitter-heex
   vscodium
   gh
 ]
-
 #+end_src

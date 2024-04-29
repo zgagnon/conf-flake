@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs,... }:
 with pkgs; [
   _1password
   action-validator
+  anki-bin
   cabal-install
   dbeaver
   discord
@@ -28,6 +29,8 @@ with pkgs; [
   shellcheck
   shfmt
   terraform
+  tree-sitter
+  tree-sitter-grammars.tree-sitter-heex
   vscodium
   gh
 ]

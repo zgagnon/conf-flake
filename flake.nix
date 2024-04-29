@@ -5,8 +5,9 @@
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
+    emacsng.url = "github:emacs-ng/emacs-ng";
   };
-  outputs = { self, nixpkgs, home-manager, darwin, ... }: {
+  outputs = { self, nixpkgs, home-manager, darwin, emacsng, ... }: {
    darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem {
     system = "aarch64-darwin";
     modules = [

@@ -4,7 +4,10 @@
     settings = {
       auto-optimise-store = false;
       trusted-substituters = [ ];
+      extra-trusted-users = ["@admin" "zell"];
     };
+    linux-builder.enable = true;
+
     extraOptions = ''
       experimental-features = nix-command flakes
     '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''

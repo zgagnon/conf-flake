@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib,  ... }:
 let
   homebrew = import ./homebrew.nix;
   homeDirectory = "/Users/zell";
@@ -17,12 +17,14 @@ in {
     (import ../../programs/git {
       inherit lib gitmessage pkgs homeDirectory email;
     })
+    (import ../../programs/git/column-log { inherit homeDirectory; })
   ];
+
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = { pkgs, config, ... }: {
+    users.zell = { pkgs, config, emacs-ng, ... }: {
       imports = [ ../../programs/1password ];
       home = {
         stateVersion = "23.11";

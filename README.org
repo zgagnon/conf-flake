@@ -32,8 +32,9 @@ will be determined by the host name. Each configuration includes home manager, a
       home-manager.url = "github:nix-community/home-manager/release-23.11";
       darwin.url = "github:lnl7/nix-darwin";
       darwin.inputs.nixpkgs.follows = "nixpkgs";
+      emacsng.url = "github:emacs-ng/emacs-ng";
     };
-    outputs = { self, nixpkgs, home-manager, darwin, ... }: {
+    outputs = { self, nixpkgs, home-manager, darwin, emacsng, ... }: {
      darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
@@ -67,7 +68,7 @@ fi
 #+end_src
 
 ** Tangling the literate config files
-This file is also the source code for the script (and the flake). All the other source code is in
+This file is atso the source code for the script (and the flake). All the other source code is in
 similar files. We need to remove the source code from the docs and put it into the appropriate files,
 a process called `tangling` (this style of programming is called [[https://en.wikipedia.org/wiki/Literate_programming][Literate Programming]]). Here, we ask
 git for the list of unstaged modified files, and tangle those specifically. After it finishes, we can stage
@@ -102,8 +103,13 @@ darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 Finally, we can commit the current config. This way, when we roll back to a previous generation, we can
 roll back to the previous config.
 #+begin_src sh
-commit_message=$(date)
-git commit -m "$commit_message"
+SCRIPT_PATH="${BASH_SOURCE:-$0}"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+(
+    cd "$SCRIPT_DIR" 
+    commit_message=$(date)
+    git commit -m "$commit_message"
+)
 #+end_src
 
 ** Update shell session

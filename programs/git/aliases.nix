@@ -1,8 +1,7 @@
 {
   co = "checkout";
   st = "status";
-  ci = "commit";
-  l  = "!. ~/.githelpers && pretty_git_log";
+  ci = "commit -v";
   lg =
     "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
   lgp =
@@ -16,6 +15,7 @@
   pf = "push --force-with-lease";
   pop = "reset HEAD^";
   update = "ci --amend --no-edit";
+  edit = "ci --amend";
   cp = "cherry-pick";
   dfc = "diff --cached";
   rpo = "remote prune origin";

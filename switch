@@ -24,7 +24,12 @@ git add .
 
 darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 
-commit_message=$(date)
-git commit -m "$commit_message"
+SCRIPT_PATH="${BASH_SOURCE:-$0}"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+(
+    cd "$SCRIPT_DIR" 
+    commit_message=$(date)
+    git commit -m "$commit_message"
+)
 
 echo "source ~/.zshrc" | pbcopy

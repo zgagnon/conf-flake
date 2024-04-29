@@ -17,10 +17,9 @@
 (package! super-save)
 ;(use-package! super-save)
 
-;; Alchemist
-;; An elixir mode for interacting with mix. Can compile and run tests.
+(package! expand-region)
 
-;; Install alchemist cause it seems like doom didn't pull it?
+(package! cobol-mode)
 
 ;;(unless (package-installed-p 'alchemist)
 ;;  (package-install 'alchemist))
@@ -30,3 +29,5 @@
      )
         (package! alchemist)
     )
+
+(package! evil-commentary)

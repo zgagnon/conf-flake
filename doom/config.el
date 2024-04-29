@@ -12,19 +12,21 @@
 
 
 
-;; We can then use it to set the fonts. See 'C-h v doom-font' for documentation and more examples of what they
-;;  accept.
+;; We can then use it to set the fonts. See 'C-h v doom-font' for documentation and more examples of what they accept.
 
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-serif-font (font-spec :family "FiraCode Nerd Font" :size 18))
 
+(setq window-divider-default-right-width 4
+      window-divider-default-bottom-width 4)
+
 
 
 ;; And the theme. doom-fairy-floss is purple, good for day and night
 
-(setq doom-theme 'doom-fairy-floss)
+(setq doom-theme 'doom-library)
 
 
 
@@ -43,16 +45,7 @@
    (push '("<-" . ?\u2190) prettify-symbols-alist)
    (push '("|>" . ?\u25B7) prettify-symbols-alist)))
 
-;; Basic editor configuration
-
-;; Tab Width
-
 (setq-default tab-width 2)
-
-
-
-
-;; Set a more reasonable default for opening a new client window. The very small window causes a lot of thrash when the window manager grabs a hold of it
 
 (if (display-graphic-p)
     (progn
@@ -74,10 +67,8 @@
 
 (setq auto-save-default nil)
 
-
-
-;; Set up ibuffer with projectile sorting
-
+(use-package! expand-region
+  :bind ("C-=" . er/expand-region))
 
 (add-hook 'ibuffer-hook
           (lambda ()
@@ -85,26 +76,19 @@
             (unless (eq ibuffer-sorting-mode 'alphabetic)
               (ibuffer-do-sort-by-alphabetic))))
 
-
-
-
-;; Add ".elixir2" files to the list of files that trigger the mode
+;(after! cobol-mode (setq auto-mode-alist
+      ;; (append
+      ;;  '(("\\.cob\\'" . cobol-mode)
+      ;;    ("\\.cbl\\'" . cobol-mode)
+      ;;    ("\\.cpy\\'" . cobol-mode))
+      ;;  auto-mode-alist)))
 
 (add-to-list 'auto-mode-alist '("\\.elixir2\\'" . elixir-mode))
  ;Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
 ;(add-hook 'elixir-mode-hook
 ;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
-
-
-
-;; Setup mix for nix
-
 (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
-
-
-
-;; and configure it?
 
 (use-package! alchemist
   :hook (elixir-mode . alchemist-mode)
@@ -117,18 +101,10 @@
   (setq alchemist-mix-env "dev")
   (map! :map elixir-mode-map :nv "m" alchemist-mode-keymap))
 
-;; LSP
-
-;; Configure some LSP options
-
 (setq lsp-elixir-fetch-deps nil)
 (setq lsp-elixir-suggest-specs nil)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
-
-
-
-;; Set some global LSP options as well
 
 (after! lsp-ui (
 setq lsp-lens-enable t
@@ -144,18 +120,10 @@ lsp-ui-sideline-diagnostic-max-lines 20
 lsp-ui-sideline-ignore-duplicate t
 lsp-ui-sideline-enable t))
 
-;; Copilot
-
-;; Add a copilot indentation for elixir
-
 (defvar universal-indent 2)
 
 (after! (evil copilot)
   (add-to-list 'copilot-indentation-alist '(elixir-mode universal-indent)))
-
-
-
-;; Make sure org mode can tangle some basics. Also prompt to tangle after save - works with auto save
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -166,26 +134,15 @@ lsp-ui-sideline-enable t))
 
 (add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 
+(setq org-directory "~/logseq/")
+(setq org-roam-directory "~/logseq/")
+(setq org-roam-dailies-directory "journals/")
 
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-
-(setq org-directory "~/org/")
-
-;; Config for emacs - doom specifi
-;; :PROPERTIES:
-;; :header-args: :tangle config.el :comments org
-;; :END:
-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;;  sync' after modifying this file!
-
-
-;;  Some functionality uses this to identify you, e.g. GPG configuration, email
-;;  clients, file templates and snippets. It is optional.
-;;  (setq user-full-name "John Doe"
-;;        user-mail-address "john@doe.com")
-
-
+(custom-set-faces!
+  `(org-level-1 :family "Luminari" :height 400)
+  `(org-level-2 :family "Cochin" :height 300)
+  `(org-level-3 :family "Rockwell" :height 200)
+  `(org-level-4 :family "Rockwell" :height 150)
+  `(org-level-5 :family "Rockwell" :height 150)
+  `(org-level-6 :family "Rockwell" :height 150)
+                )
