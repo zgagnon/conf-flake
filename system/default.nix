@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }: {
   nixpkgs = { config.allowUnfree = true; };
   nix = {
-    trusted-users =["@admin"];
     settings = {
+      trusted-users =["@admin"];
       auto-optimise-store = false;
       trusted-substituters = [ ];
       extra-trusted-users = [ "@admin" "zell" ];
