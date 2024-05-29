@@ -10,10 +10,6 @@
       enable = true;
       ephemeral = true;
       maxJobs = 4;
-      serviceConfig = {
-        StandardOutPath = "/var/log/darwin-builder.log";
-        StandardErrorPath = "/var/log/darwin-builder.log";
-      };
       config = {
         services.openssh.enable = true;
         virtualisation = {
@@ -39,4 +35,5 @@
   environment.systemPackages = [ pkgs.neovim ];
 
   home-manager.users.zell.services.syncthing = { enable = true; };
+  launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
 }
