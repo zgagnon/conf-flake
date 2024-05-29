@@ -47,6 +47,8 @@
 
 (setq-default tab-width 2)
 
+(global-visual-line-mode 1)
+
 (if (display-graphic-p)
     (progn
       (setq initial-frame-alist

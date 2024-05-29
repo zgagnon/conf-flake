@@ -42,7 +42,7 @@ Can be an integer to determine the exact padding."
                  (green        '("#2e4435" "#2e4435" "green"))
                  (light-green  '("#B5CEA8" "#BBCCAA" "green"))
                  (teal         '("#35CDAF" "#33CCAA" "brightgreen"))
-                 (yellow       '("#f8c67c" "#f8c67c" "brightyellow"))
+                 (yellow       '("#FF00CE" "#FF00CE" "brightyellow"))
                  (light-yellow '("#dbc6a8" "#dbc6a8" "brightyellow"))
                  (blue         '("#027d9d" "#8CDAFF" "brightblue"))
                  (dark-blue    '("#2f4d55" "#6699CC" "blue"))

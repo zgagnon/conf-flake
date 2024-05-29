@@ -309,13 +309,19 @@ Does a lot of changes that I don't like
 
 ** Basic editor configuration
 
-Tab Width
+*** Tab Width
  #+begin_src elisp :tangle config.el
 
 (setq-default tab-width 2)
  #+end_src
 
+*** Word Wrap
 
+#+begin_src elisp :tangle config.el
+(global-visual-line-mode 1)
+#+end_src
+
+*** Window Size
  Set a more reasonable default for opening a new client window. The very small window causes a lot of thrash when the window manager grabs a hold of it
  #+begin_src elisp :tangle config.el
 
@@ -331,6 +337,8 @@ Tab Width
   )
  #+end_src
 
+
+** Doom Modules
 A set of modules that change the way the editor works
 #+begin_src elisp :tangle init.el
        :editor
@@ -774,6 +782,9 @@ Might want this if I want emacs in a terminal ever
 #+begin_src elisp :tangle init.el
        :lang
 #+end_src
+
+#+RESULTS:
+: :lang
 
 *** Agda
 
