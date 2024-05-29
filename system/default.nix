@@ -16,6 +16,7 @@
           diskSize = 40 * 1024;
           memorySize = 8 * 1024;
         };
+        services.openssh.enable = true;
         cores = 6;
       };
     };
