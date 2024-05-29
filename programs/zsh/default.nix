@@ -2,7 +2,7 @@
 {
   home-manager.users.zell.programs.zsh = {
         enable = true;
-        enableAutosuggestions = true;
+        autosuggestion.enable = true;
         initExtra = builtins.concatStringsSep "\n" [
           "export EDITOR=vim"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
