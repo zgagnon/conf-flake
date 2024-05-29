@@ -19,12 +19,12 @@ Universal nix system configuration
     ephemeral = true;
     maxJobs = 4;
     config = {
+      services.openssh.enable = true;
       virtualisation = {
         darwin-builder = {
           diskSize = 40 * 1024;
           memorySize = 8 * 1024;
         };
-        services.openssh.enable = true;
         cores = 6;
       };
     };
