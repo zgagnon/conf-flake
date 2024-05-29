@@ -4,7 +4,6 @@ with pkgs; [
   action-validator
   anki-bin
   cabal-install
-  dbeaver-bin
   discord
   elixir
   elixir_ls
