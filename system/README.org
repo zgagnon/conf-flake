@@ -12,7 +12,7 @@ Universal nix system configuration
     settings = {
       auto-optimise-store = false;
       trusted-substituters = [ ];
-      extra-trusted-users = ["@admin" "zell"];
+      extra-trusted-users = [ "@admin" "zell" ];
     };
     linux-builder = {
       enable = true;
@@ -43,7 +43,12 @@ Universal nix system configuration
   environment.systemPackages = [ pkgs.neovim ];
 
   home-manager.users.zell.services.syncthing = { enable = true; };
-  launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+      StandardOutPath = "/var/log/darwin-builder.log";
+      StandardErrorPath = "/var/log/darwin-builder.log";
+    };
+  };
 }
 
 #+end_src

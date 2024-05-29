@@ -4,7 +4,7 @@
     settings = {
       auto-optimise-store = false;
       trusted-substituters = [ ];
-      extra-trusted-users = ["@admin" "zell"];
+      extra-trusted-users = [ "@admin" "zell" ];
     };
     linux-builder = {
       enable = true;
@@ -35,5 +35,10 @@
   environment.systemPackages = [ pkgs.neovim ];
 
   home-manager.users.zell.services.syncthing = { enable = true; };
-  launchd.daemons.linux-builder = { serviceConfig = { StandardOutPath = "/var/log/darwin-builder.log"; StandardErrorPath = "/var/log/darwin-builder.log"; }; };
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+      StandardOutPath = "/var/log/darwin-builder.log";
+      StandardErrorPath = "/var/log/darwin-builder.log";
+    };
+  };
 }
