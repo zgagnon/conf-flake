@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: {
   nixpkgs = { config.allowUnfree = true; };
   nix = {
+    package = pkgs.nix;
     settings = {
       trusted-users =["@admin"];
       auto-optimise-store = false;
