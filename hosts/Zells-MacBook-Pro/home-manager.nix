@@ -21,7 +21,7 @@ with pkgs; [
   kubernetes-helm
   mob
   neovim
-  nixfmt
+  nix
   nodejs
   pandoc
   ripgrep
