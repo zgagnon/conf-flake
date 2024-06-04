@@ -26,6 +26,7 @@ with pkgs; [
   ripgrep
   shellcheck
   shfmt
+  stgit
   terraform
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
