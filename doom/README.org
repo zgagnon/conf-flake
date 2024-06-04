@@ -1223,7 +1223,7 @@ UML D:
 
 They tried
 #+begin_src elisp :tangle init.el
-       ;;purescript        ; javascript, but functional
+       purescript        ; javascript, but functional
 #+end_src
 
 *** Python
