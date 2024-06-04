@@ -23,6 +23,7 @@ with pkgs; [
   neovim
   nodejs
   pandoc
+  purescript
   ripgrep
   shellcheck
   shfmt
