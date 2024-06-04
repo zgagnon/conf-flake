@@ -13,7 +13,6 @@ with pkgs; [
   fd
   fira-code
   google-cloud-sdk
-  gnugrep
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
