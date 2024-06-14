@@ -4,6 +4,7 @@ with pkgs; [
   action-validator
   anki-bin
   cabal-install
+  cowsay
   discord
   elixir
   elixir_ls
@@ -23,7 +24,6 @@ with pkgs; [
   neovim
   nodejs
   pandoc
-  purescript
   ripgrep
   shellcheck
   shfmt

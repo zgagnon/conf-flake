@@ -625,7 +625,7 @@ Can't have per-directory environment without per-directory
 
 Fake systems
 #+begin_src elisp :tangle init.el
-       ;;docker
+       docker
 #+end_src
 
 *** Editorconfig
