@@ -51,6 +51,42 @@ will be determined by the host name. Each configuration includes home manager, a
  :header-args: :tangle switch :shebang
  :END:
 
+A quick script to speed up switching to a new darwin generation on some Mac machines
+
+** Moving to a noodling branch if not already there
+#+begin_src shell
+# Get the current branch name
+current_branch=$(git branch --show-current)
+
+# Get today's date in YYYY-MM-DD format
+today=$(date +%Y-%m-%d)
+
+# Check if the current branch is 'main'
+if [ "$current_branch" == "main" ]; then
+    # # Get the current branch name
+current_branch=$(git branch --show-current)
+
+# Get today's date in YYYY-MM-DD format
+today=$(date +%Y-%m-%d)
+
+# Check if the current branch is 'main'
+if [ "$current_branch" == "main" ]; then
+    # Create a new branch with the name 'noodling-YYYY-MM-DD'
+    new_branch="noodling-$today"
+    git checkout -b "$new_branch"
+    echo "Created and switched to new branch: $new_branch"
+else
+    echo "Not on the 'main' branch. Current branch is: $current_branch"
+fiCreate a new branch with the name 'noodling-YYYY-MM-DD'
+    new_branch="noodling-$today"
+    git checkout -b "$new_branch"
+    echo "Created and switched to new branch: $new_branch"
+else
+    echo "Not on the 'main' branch. Current branch is: $current_branch"
+fi
+
+#+end_src
+
 ** Deleting externally modified files
 A quick script to speed up switching to a new darwin generation on some Mac machines
 
