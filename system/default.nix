@@ -5,9 +5,25 @@
     settings = {
       trusted-users =["@admin"];
       auto-optimise-store = false;
-      trusted-substituters = [ ];
+      #substituters = [ "https://cache.iog.io" ];
+      #trusted-public-keys = [  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
       extra-trusted-users = [ "@admin" "zell" ];
     };
+    # linux-builder = {
+    #   enable = true;
+    #   ephemeral = true;
+    #   maxJobs = 4;
+    #   config = {
+    #     services.openssh.enable = true;
+    #     virtualisation = {
+    #       darwin-builder = {
+    #         diskSize = 40 * 1024;
+    #         memorySize = 8 * 1024;
+    #       };
+    #       cores = 6;
+    #     };
+    #   };
+    # };
 
     extraOptions = ''
       experimental-features = nix-command flakes
