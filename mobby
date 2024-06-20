@@ -2,15 +2,15 @@
 
 # if we want to grab, then git pr and set mob timer to 10 minutes
 if [ "$1" == "grab" ]; then
-  git pr
-  (sleep 30 && say "timer pop") &
-  #mob timer 10
+  git pull --rebase
+  cowsay "You are the driver for 10 minutes"
+  (sleep 600 && say "Time to switch" && cowsay "Time to Switch") &
   exit
 fi
 
 # if we want to share, then git commit with a with and push
 if [ "$1" == "share" ]; then
-  git ci -am "WIP: $2"
+  git commit -am "WIP: $2"
   git push
   exit
 fi
