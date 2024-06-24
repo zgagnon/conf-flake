@@ -664,7 +664,7 @@ What if emacs was an IDE? (It's not)
 #+end_src
 
  Set global LSP options
- #+begin_src elisp *tangle config.el
+ #+begin_src elisp :tangle config.el
 
 (after! lsp-mode (
                   setq lsp-lens-enable t
