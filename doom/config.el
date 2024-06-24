@@ -117,10 +117,21 @@
   (setq alchemist-mix-env "dev")
   (map! :map elixir-mode-map :nv "m" alchemist-mode-keymap))
 
-(setq lsp-elixir-fetch-deps nil)
-(setq lsp-elixir-suggest-specs nil)
+(setq lsp-elixir-fetch-deps t)
+(setq lsp-elixir-suggest-specs t)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
+(after! lsp-mode
+  (setq lsp-elixir-local-server-command "/etc/profiles/per-user/zell/bin/elixir-ls"))
+(use-package lsp-mode
+  :config
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.node_modules\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]deps\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].data\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].direnv\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].elixir_ls\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].local\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]_build\\'"))
 
 (after! lsp-ui (
 setq lsp-lens-enable t

@@ -339,7 +339,7 @@ tree-sitter       ; syntax and parsing, sitting in a tree...
 
 ;;dhall
 
-(elixir +lsp +tree-sitter)            ; erlang done right
+(elixir +tree-sitter +lsp)            ; erlang done right
 
 ;;elm               ; care for a cup of TEA?
 

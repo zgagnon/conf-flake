@@ -883,7 +883,7 @@ Side-effect free config language
 
 I guess its fine for work
 #+begin_src elisp :tangle init.el
-       (elixir +lsp +tree-sitter)            ; erlang done right
+       (elixir +tree-sitter +lsp)            ; erlang done right
 #+end_src
 
 
@@ -935,10 +935,21 @@ and configure it?
 
 Configure some LSP options
 #+begin_src elisp :tangle config.el
-(setq lsp-elixir-fetch-deps nil)
-(setq lsp-elixir-suggest-specs nil)
+(setq lsp-elixir-fetch-deps t)
+(setq lsp-elixir-suggest-specs t)
 (setq lsp-elixir-signature-after-complete t)
 (setq lsp-elixir-enable-test-lenses t)
+(after! lsp-mode
+  (setq lsp-elixir-local-server-command "/etc/profiles/per-user/zell/bin/elixir-ls"))
+(use-package lsp-mode
+  :config
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]\\.node_modules\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]deps\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].data\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].direnv\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].elixir_ls\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\].local\\'")
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]_build\\'"))
 #+end_src
 
 Set some global LSP options as well

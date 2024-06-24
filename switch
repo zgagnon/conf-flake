@@ -20,12 +20,6 @@ if [ "$current_branch" == "main" ]; then
     echo "Created and switched to new branch: $new_branch"
 else
     echo "Not on the 'main' branch. Current branch is: $current_branch"
-fiCreate a new branch with the name 'noodling-YYYY-MM-DD'
-    new_branch="noodling-$today"
-    git checkout -b "$new_branch"
-    echo "Created and switched to new branch: $new_branch"
-else
-    echo "Not on the 'main' branch. Current branch is: $current_branch"
 fi
 
 config_file="$HOME/.ssh/config"

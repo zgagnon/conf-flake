@@ -4,9 +4,8 @@ with pkgs; [
   action-validator
   anki-bin
   cabal-install
-  cowsay
   discord
-  elixir
+  elixir_1_16
   elixir_ls
   emacs
   erlfmt
