@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }: {
   nixpkgs = { config.allowUnfree = true; };
   nix = {
-    package = pkgs.nix;
+    package = pkgs.nixVersions.latest;
     settings = {
       trusted-users =["@admin"];
       auto-optimise-store = false;
-      #substituters = [ "https://cache.iog.io" ];
-      #trusted-public-keys = [  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+      substituters = [ "https://cache.iog.io" ];
+      trusted-public-keys = [  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
       extra-trusted-users = [ "@admin" "zell" ];
     };
     # linux-builder = {

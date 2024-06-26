@@ -9,7 +9,7 @@ Universal nix system configuration
 { config, lib, pkgs, ... }: {
   nixpkgs = { config.allowUnfree = true; };
   nix = {
-    package = pkgs.nix;
+    package = pkgs.nixVersions.latest;
     settings = {
       trusted-users =["@admin"];
       auto-optimise-store = false;
