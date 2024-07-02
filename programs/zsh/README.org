@@ -40,7 +40,7 @@ Toss doom into the PATH so we can update the emacs config from anywhere
           "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
           "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
           ''eval "$(/opt/homebrew/bin/brew shellenv)"''
-          ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake"''
+          ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake/switcher"''
                 ];
 
         history = {

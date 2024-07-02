@@ -11,7 +11,7 @@ won't catch the updates. Its also important to capture those switches
 so that generations and the corresponding config can be linked together
 
 ** Entry Script
-#+begin_src bash :tangle switcher
+#+begin_src bash :tangle switcher :tangle-mode (identity #o755)
 cd "$(dirname "$0")/.." || exit
 
 just -f switcher/justfile "$@"
@@ -21,7 +21,9 @@ just -f switcher/justfile "$@"
 
 #+begin_src just :tangle justfile
 switch: darwin-rebuild commit
-    echo "Switching State"
+    echo "source ~/.zshrc" | pbcopy
+    figlet "State Updates"
+    echo "Run \"source ~/.zshrc\" to pick up the changes"
 #+end_src
 
 ** Temp Branch Creation
@@ -40,6 +42,7 @@ branch:
 
     # Check if the current branch is 'main'
     if [ "$current_branch" == "main" ]; then
+            figlet "Branch"
             # Get the current branch name
             current_branch=$(git branch --show-current)
 
@@ -66,6 +69,7 @@ delete-ssh-config:
     config_file="$HOME/.ssh/config"
 
     if [ -f "$config_file" ]; then
+      figlet "SSH"
       echo "Deleting existing SSH config file: $config_file"
       rm "$config_file"
     else
@@ -93,12 +97,20 @@ tangle: branch
           printf "\033[1;34m%s\033[0m\n" "$file"
           emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
         }
+        git_changes=$(git diff --name-only --diff-filter=M | grep '\.org$')
 
+        if [ -n "${array[*]}" ]; then
+            figlet "Tangle"
         for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
           tangle_org "$file"
         done
 
         git add .
+        else
+          echo "No files to tangle"
+          exit 1
+        fi
+
     )
 #+end_src
 
@@ -107,6 +119,7 @@ tangle: branch
 Here we switch to the new generation. This is when the machine is brought in line with the config
 #+begin_src just :tangle justfile
 darwin-rebuild: tangle delete-ssh-config
+    figlet "Rebuild"
     darwin-rebuild switch --flake ~/darwin-flake/ --fallback
 #+end_src
 
@@ -121,10 +134,15 @@ commit: tangle delete-ssh-config branch
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
     (
         cd "$(pwd)/.."
+        if [[ $(git status --porcelain) ]]; then
+            figlet "Commit"
         git add .
         git add .
         commit_message=$(date)
         git commit -m "$commit_message"
+        else
+          echo "Working directory clean"
+        fi
     )
 #+end_src
 
@@ -135,6 +153,7 @@ Doom Emacs has its own config
 #+begin_src just :tangle justfile
 
 doom-sync:
+    figlet "DOOM"
     doom sync
 
 doom: doom-sync commit
