@@ -1,0 +1,88 @@
+switch: darwin-rebuild commit
+    echo "Switching State"
+
+branch:
+    #!/usr/bin/env sh
+    current_branch=$(git branch --show-current)
+
+    # Get today's date in YYYY-MM-DD format
+    today=$(date +%Y-%m-%d)
+
+    # Check if the current branch is 'main'
+    if [ "$current_branch" == "main" ]; then
+            # Get the current branch name
+            current_branch=$(git branch --show-current)
+
+            # Get today's date in YYYY-MM-DD format
+            today=$(date +%Y-%m-%d)
+
+            # Check if the current branch is 'main'
+            if [ "$current_branch" == "main" ]; then
+                    # Create a new branch with the name 'noodling-YYYY-MM-DD'
+                    new_branch="noodling-$today"
+                    git checkout -b "$new_branch"
+                    echo "Created and switched to new branch: $new_branch"
+            else
+                    echo "Not on the 'main' branch. Current branch is: $current_branch"
+            fi
+            # Create a new branch with the name 'noodling-YYYY-MM-DD'
+            new_branch="noodling-$today"
+            git checkout -b "$new_branch"
+            echo "Created and switched to new branch: $new_branch"
+    else
+            echo "Not on the 'main' branch. Current branch is: $current_branch"
+    fi
+
+delete-ssh-config:
+    #!/usr/bin/env sh
+    config_file="$HOME/.ssh/config"
+
+    if [ -f "$config_file" ]; then
+      echo "Deleting existing SSH config file: $config_file"
+      rm "$config_file"
+    else
+      echo "No existing SSH config file found."
+    fi
+
+tangle: branch
+    #!/usr/bin/env sh
+    SCRIPT_PATH="${BASH_SOURCE:-$0}"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+
+    (
+        cd "$(pwd)/.."
+        tangle_org() {
+          local file="$1"
+          printf "\033[1;34m%s\033[0m\n" "$file"
+          emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
+        }
+
+        for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+          tangle_org "$file"
+        done
+
+        git add .
+    )
+
+darwin-rebuild: tangle delete-ssh-config
+    darwin-rebuild switch --flake ~/darwin-flake/ --fallback
+
+commit: tangle delete-ssh-config branch
+    #!/usr/bin/env sh
+    SCRIPT_PATH="${BASH_SOURCE:-$0}"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+    (
+        cd "$(pwd)/.."
+        git add .
+        git add .
+        commit_message=$(date)
+        git commit -m "$commit_message"
+    )
+
+finish:
+    cd "$(pwd)/.."
+    git add .
+    git add .
+    git ci
+    git rebase -i main
+    git merge main

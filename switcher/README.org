@@ -1,0 +1,152 @@
+
+#+title: Config switch script
+#+author: Zoe Gagnon
+#+date:  2024-02-27
+
+* Switcher
+
+This is a utility to help switch to various machine configs. Because
+most configs are written in org and tangled out, simply switching
+won't catch the updates. Its also important to capture those switches
+so that generations and the corresponding config can be linked together
+
+** Entry Script
+#+begin_src bash :tangle switcher
+cd "$(dirname "$0")/.." || exit
+
+just -f switcher/justfile "$@"
+#+end_src
+
+** Main build target
+
+#+begin_src just :tangle justfile
+switch: darwin-rebuild commit
+    echo "Switching State"
+#+end_src
+
+** Temp Branch Creation
+
+The switcher operates on a temporary branch. Since system changes
+can take a bit of iteration, this makes sure that ==main== is always
+safe to go back
+
+#+begin_src just :tangle justfile
+branch:
+    #!/usr/bin/env sh
+    current_branch=$(git branch --show-current)
+
+    # Get today's date in YYYY-MM-DD format
+    today=$(date +%Y-%m-%d)
+
+    # Check if the current branch is 'main'
+    if [ "$current_branch" == "main" ]; then
+            # Get the current branch name
+            current_branch=$(git branch --show-current)
+
+            # Get today's date in YYYY-MM-DD format
+            today=$(date +%Y-%m-%d)
+
+            # Check if the current branch is 'main'
+            if [ "$current_branch" == "main" ]; then
+                    # Create a new branch with the name 'noodling-YYYY-MM-DD'
+                    new_branch="noodling-$today"
+                    git checkout -b "$new_branch"
+                    echo "Created and switched to new branch: $new_branch"
+            else
+                    echo "Not on the 'main' branch. Current branch is: $current_branch"
+            fi
+            # Create a new branch with the name 'noodling-YYYY-MM-DD'
+            new_branch="noodling-$today"
+            git checkout -b "$new_branch"
+            echo "Created and switched to new branch: $new_branch"
+    else
+            echo "Not on the 'main' branch. Current branch is: $current_branch"
+    fi
+#+end_src
+
+** Deleting externally modified files
+A quick script to speed up switching to a new darwin generation on some Mac machines
+
+Kandji (a tool used by MO) likes to edit this and break nix control. I don't care about the kandji thing,
+so just delete it before we start.
+#+begin_src just :tangle justfile
+delete-ssh-config:
+    #!/usr/bin/env sh
+    config_file="$HOME/.ssh/config"
+
+    if [ -f "$config_file" ]; then
+      echo "Deleting existing SSH config file: $config_file"
+      rm "$config_file"
+    else
+      echo "No existing SSH config file found."
+    fi
+#+end_src
+
+** Tangling the literate config files
+This file is atso the source code for the script (and the flake). All the other source code is in
+similar files. We need to remove the source code from the docs and put it into the appropriate files,
+a process called `tangling` (this style of programming is called [[https://en.wikipedia.org/wiki/Literate_programming][Literate Programming]]). Here, we ask
+git for the list of unstaged modified files, and tangle those specifically. After it finishes, we can stage
+those files.
+
+#+begin_src just :tangle justfile
+tangle: branch
+    #!/usr/bin/env sh
+    SCRIPT_PATH="${BASH_SOURCE:-$0}"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+
+    (
+        cd "$(pwd)/.."
+        tangle_org() {
+          local file="$1"
+          printf "\033[1;34m%s\033[0m\n" "$file"
+          emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
+        }
+
+        for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+          tangle_org "$file"
+        done
+
+        git add .
+    )
+#+end_src
+
+** Switching to the new generaton
+
+Here we switch to the new generation. This is when the machine is brought in line with the config
+#+begin_src just :tangle justfile
+darwin-rebuild: tangle delete-ssh-config
+    darwin-rebuild switch --flake ~/darwin-flake/ --fallback
+#+end_src
+
+** Commit the generation config
+
+Finally, we can commit the current config. This way, when we roll back to a previous generation, we can
+roll back to the previous config.
+#+begin_src just :tangle justfile
+commit: tangle delete-ssh-config branch
+    #!/usr/bin/env sh
+    SCRIPT_PATH="${BASH_SOURCE:-$0}"
+    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+    (
+        cd "$(pwd)/.."
+        git add .
+        git add .
+        commit_message=$(date)
+        git commit -m "$commit_message"
+    )
+#+end_src
+
+** Finishing up
+
+When the experimentation is finished, we can safely squash the commit and move back to main
+
+#+begin_src just :tangle justfile
+finish:
+    cd "$(pwd)/.."
+    git add .
+    git add .
+    git ci
+    git rebase -i main
+    git merge main
+#+end_src

@@ -13,6 +13,7 @@ with pkgs; [
   eza
   fasd
   fd
+  figlet
   fira-code
   google-cloud-sdk
   gnugrep

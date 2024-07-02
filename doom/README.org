@@ -1401,6 +1401,10 @@ Why not just use the real thing?
 :END:
 Here we will install any packages not found in the default modules
 
+#+begin_src elisp :tangle packages.el
+(package! just-mode)
+#+end_src
+
 
 * Code Utilities
 
