@@ -12,6 +12,7 @@
           "alias g=git"
           "alias v='f -e vim'"
           "alias ls='ls -lahG'"
+          "alias el='eza -labh --git --git-repos'"
           "alias history='fc -l 1'"
           "alias ms='mob start'"
           "alias vim=nvim"

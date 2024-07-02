@@ -31,11 +31,15 @@ in {
         username = lib.mkDefault "zell";
         homeDirectory = lib.mkForce homeDirectory;
 
-        sessionVariables = { EDITOR = "vim"; };
+         sessionVariables = { EDITOR = "vim"; };
 
         packages = packages;
       };
       programs.home-manager.enable = true;
+      programs.fzf = {
+        enable = true;
+        enableZshIntegration = true;
+      };
     };
   };
 }

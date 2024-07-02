@@ -31,6 +31,7 @@ Toss doom into the PATH so we can update the emacs config from anywhere
           "alias g=git"
           "alias v='f -e vim'"
           "alias ls='ls -lahG'"
+          "alias el='eza -labh --git --git-repos'"
           "alias history='fc -l 1'"
           "alias ms='mob start'"
           "alias vim=nvim"

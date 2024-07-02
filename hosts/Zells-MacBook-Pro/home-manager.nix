@@ -3,12 +3,14 @@ with pkgs; [
   _1password
   action-validator
   anki-bin
+  bat
   cabal-install
   discord
   elixir_1_16
   elixir_ls
   emacs
   erlfmt
+  eza
   fasd
   fd
   fira-code
@@ -17,6 +19,7 @@ with pkgs; [
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
+  just
   kubectx
   kubernetes-helm
   mob
