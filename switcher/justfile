@@ -16,15 +16,6 @@ branch:
             # Get today's date in YYYY-MM-DD format
             today=$(date +%Y-%m-%d)
 
-            # Check if the current branch is 'main'
-            if [ "$current_branch" == "main" ]; then
-                    # Create a new branch with the name 'noodling-YYYY-MM-DD'
-                    new_branch="noodling-$today"
-                    git checkout -b "$new_branch"
-                    echo "Created and switched to new branch: $new_branch"
-            else
-                    echo "Not on the 'main' branch. Current branch is: $current_branch"
-            fi
             # Create a new branch with the name 'noodling-YYYY-MM-DD'
             new_branch="noodling-$today"
             git checkout -b "$new_branch"
@@ -78,6 +69,11 @@ commit: tangle delete-ssh-config branch
         commit_message=$(date)
         git commit -m "$commit_message"
     )
+
+doom-sync:
+    doom sync
+
+doom: doom-sync commit
 
 finish:
     cd "$(pwd)/.."

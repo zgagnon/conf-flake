@@ -46,15 +46,6 @@ branch:
             # Get today's date in YYYY-MM-DD format
             today=$(date +%Y-%m-%d)
 
-            # Check if the current branch is 'main'
-            if [ "$current_branch" == "main" ]; then
-                    # Create a new branch with the name 'noodling-YYYY-MM-DD'
-                    new_branch="noodling-$today"
-                    git checkout -b "$new_branch"
-                    echo "Created and switched to new branch: $new_branch"
-            else
-                    echo "Not on the 'main' branch. Current branch is: $current_branch"
-            fi
             # Create a new branch with the name 'noodling-YYYY-MM-DD'
             new_branch="noodling-$today"
             git checkout -b "$new_branch"
@@ -121,7 +112,7 @@ darwin-rebuild: tangle delete-ssh-config
 
 ** Commit the generation config
 
-Finally, we can commit the current config. This way, when we roll back to a previous generation, we can
+Commit the current config. This way, when we roll back to a previous generation, we can
 roll back to the previous config.
 #+begin_src just :tangle justfile
 commit: tangle delete-ssh-config branch
@@ -135,6 +126,19 @@ commit: tangle delete-ssh-config branch
         commit_message=$(date)
         git commit -m "$commit_message"
     )
+#+end_src
+
+** Doom
+
+Doom Emacs has its own config
+
+#+begin_src just :tangle justfile
+
+doom-sync:
+    doom sync
+
+doom: doom-sync commit
+
 #+end_src
 
 ** Finishing up
