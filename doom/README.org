@@ -260,7 +260,12 @@ Tab bar on top
 
 Emacs-style project tree instead
 #+begin_src elisp :tangle init.el
-       treemacs          ; a project drawer, like neotree but cooler
+       (treemacs +lsp)          ; a project drawer, like neotree but cooler
+#+end_src
+
+#+begin_src elisp :tangle config.el
+(after! treemacs
+                  (setq treemacs-indent-guide-style "line"))
 #+end_src
 
 *** Extended Unicode
@@ -284,7 +289,7 @@ Show a ~ in the left fringe to indicate empty lines
        vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 #+end_src
 
-*** TODO Window Select
+*** Window Select
 
 Where we're going, we don't need mouse
 #+begin_src elisp :tangle init.el

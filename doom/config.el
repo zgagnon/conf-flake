@@ -45,6 +45,9 @@
    (push '("<-" . ?\u2190) prettify-symbols-alist)
    (push '("|>" . ?\u25B7) prettify-symbols-alist)))
 
+(after! treemacs
+                  (setq treemacs-indent-guide-style "line"))
+
 (setq-default tab-width 2)
 
 (global-visual-line-mode 1)

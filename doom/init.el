@@ -169,7 +169,7 @@ tabs              ; a tab bar for Emacs
 
 ;; Emacs-style project tree instead
 
-treemacs          ; a project drawer, like neotree but cooler
+(treemacs +lsp)          ; a project drawer, like neotree but cooler
 
 ;; Extended Unicode
 
@@ -189,7 +189,7 @@ treemacs          ; a project drawer, like neotree but cooler
 
 vi-tilde-fringe   ; fringe tildes to mark beyond EOB
 
-;; TODO Window Select
+;; Window Select
 
 ;; Where we're going, we don't need mouse
 
