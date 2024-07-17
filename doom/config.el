@@ -48,6 +48,68 @@
 (after! treemacs
                   (setq treemacs-indent-guide-style "line"))
 
+;; Projectile
+
+;; Manages projects
+
+
+(after! projectile
+  (projectile-add-known-project "~/kohls/cics"))
+
+;; Create a tab bar across the top of the screen
+
+(after! persp-mode
+  ;; alternative, non-fancy version which only centers the output of +workspace--tabline
+  (defun workspaces-formatted ()
+    (+doom-dashboard--center (frame-width) (+workspace--tabline)))
+
+  (defun hy/invisible-current-workspace ()
+    "The tab bar doesn't update when only faces change (i.e. the
+current workspace), so we invisibly print the current workspace
+name as well to trigger updates"
+    (propertize (safe-persp-name (get-current-persp)) 'invisible t))
+
+  (customize-set-variable 'tab-bar-format '(workspaces-formatted tab-bar-format-align-right hy/invisible-current-workspace))
+
+  ;; don't show current workspaces when we switch, since we always see them
+  (advice-add #'+workspace/display :override #'ignore)
+  ;; same for renaming and deleting (and saving, but oh well)
+  (advice-add #'+workspace-message :override #'ignore))
+
+;; need to run this later for it to not break frame size for some reason
+(run-at-time nil nil (cmd! (tab-bar-mode +1)))
+
+;; Make the tab bar look good with custom faces
+
+
+(custom-set-faces!
+  '(+workspace-tab-face :inherit default :family "Jost" :height 135)
+  '(+workspace-tab-selected-face :inherit (highlight +workspace-tab-face)))
+
+(after! persp-mode
+  (defun workspaces-formatted ()
+    ;; fancy version as in screenshot
+    (+doom-dashboard--center (frame-width)
+                             (let ((names (or persp-names-cache nil))
+                                   (current-name (safe-persp-name (get-current-persp))))
+                               (mapconcat
+                                #'identity
+                                (cl-loop for name in names
+                                         for i to (length names)
+                                         collect
+                                         (concat (propertize (format " %d" (1+ i)) 'face
+                                                             `(:inherit ,(if (equal current-name name)
+                                                                             '+workspace-tab-selected-face
+                                                                           '+workspace-tab-face)
+                                                               :weight bold))
+                                                 (propertize (format " %s " name) 'face
+                                                             (if (equal current-name name)
+                                                                 '+workspace-tab-selected-face
+                                                               '+workspace-tab-face))))
+                                " "))))
+;; other persp-mode related configuration
+)
+
 (setq-default tab-width 2)
 
 (global-visual-line-mode 1)
@@ -107,7 +169,7 @@
 ;(add-hook 'elixir-mode-hook
 ;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
-(setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
+ (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
 
 (use-package! alchemist
   :hook (elixir-mode . alchemist-mode)
