@@ -17,18 +17,17 @@
 
 Binaries are installed via brew and home manager and are listed below
 #+begin_src nix :tangle default.nix
-{ pkgs, lib,  ... }:
+{ pkgs, lib, config, ... }:
 let
   homebrew = import ./homebrew.nix;
-  homeDirectory = "/Users/zell";
+  homeDirectory = "/Users/zoe";
   gitmessage = ./.gitmessage;
-  email = "zell@mechanical-orchard.com";
+  email = "zoe@zgagnon.com";
   packages = import ./home-manager.nix { inherit pkgs; };
-
 
   submoduleConfig = {
     inherit lib pkgs gitmessage homeDirectory email homebrew;
-    user = "zell";
+    user = "zoe";
     };
 
   submodules = [
@@ -46,13 +45,15 @@ let
 in {
   imports = builtins.map applySubmodule submodules;
 
+  homebrew = homebrew;
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = { pkgs, config, emacs-ng, ... }: {
+    users.zoe = { pkgs, config, emacs-ng, ... }: {
       home = {
-        stateVersion = "23.11";
-        username = lib.mkDefault "zell";
+        stateVersion = "24.05";
+        username = lib.mkDefault "zoe";
         homeDirectory = lib.mkForce homeDirectory;
 
          sessionVariables = { EDITOR = "vim"; };
@@ -74,27 +75,24 @@ These packages are installed via homebrew
 
 #+begin_src nix :tangle ./homebrew.nix
 {
+  enable = true;
+
   brews = [ "exercism" ];
 
-  taps = [ "homebrew/cask-fonts" ];
+  taps = [ ];
 
   casks = [
     "skype"
     "cursor"
     "notion"
-    "orbstack"
     "hammerspoon"
     "zoom"
     "font-fira-mono-nerd-font"
     "logseq"
     "raycast"
     "slack"
-    "tuple"
-    "tandem"
-    "warp"
     "arc"
     "readdle-spark"
-    "docker"
     "spotify"
     "google-chrome"
     "soundsource"
@@ -124,6 +122,7 @@ with pkgs; [
   fd
   figlet
   fira-code
+  fontconfig
   google-cloud-sdk
   gnugrep
   haskellPackages.hoogle

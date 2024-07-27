@@ -118,7 +118,7 @@ like `SPC-f-p`
 We can then use it to set the fonts. See 'C-h v doom-font' for documentation and more examples of what they accept.
 #+begin_src elisp :tangle config.el
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 18)
+     doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-serif-font (font-spec :family "FiraCode Nerd Font" :size 18))
 
@@ -152,7 +152,7 @@ Allows customizing the quit interaction
 Allows using emoji in the app. Include the unicode and github support
 
 #+begin_src elisp :tangle init.el
-       (emoji +unicode +github)  ; 🙂
+;       (emoji +unicode +github)  ; 🙂
 #+end_src
 
 *** Hightlight TODO

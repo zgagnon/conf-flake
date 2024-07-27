@@ -15,5 +15,12 @@
       ./hosts/Zells-MacBook-Pro/default.nix
      ];
    };
+   darwinConfigurations."Zoes-MacBook-Pro" = darwin.lib.darwinSystem {
+    system = "x86_64-darwin";
+    modules = [
+      home-manager.darwinModules.home-manager
+      ./hosts/Zoes-MacBook-Pro/default.nix
+     ];
+   };
   };
 }

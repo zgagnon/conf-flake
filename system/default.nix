@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, user, ... }: {
   nixpkgs = { config.allowUnfree = true; };
   nix = {
     package = pkgs.nixVersions.latest;
@@ -7,7 +7,7 @@
       auto-optimise-store = false;
       substituters = [ "https://cache.iog.io" ];
       trusted-public-keys = [  "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-      extra-trusted-users = [ "@admin" "zell" ];
+      extra-trusted-users = [ "@admin" user ];
     };
     # linux-builder = {
     #   enable = true;
@@ -37,7 +37,12 @@
   programs.zsh.enable = true;
   environment.systemPackages = [ pkgs.neovim ];
 
-  home-manager.users.zell.services.syncthing = { enable = true; };
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    fira-code-nerdfont
+  ];
+
+  home-manager.users.${user}.services.syncthing = { enable = true; };
   launchd.daemons.linux-builder = {
     serviceConfig = {
       StandardOutPath = "/var/log/darwin-builder.log";

@@ -1,9 +1,10 @@
-{ homeDirectory, ... }: {
-  home-manager.users.zell.home.file = {
-    "${homeDirectory}/.githelpers".source = ./.githelpers;
-  };
-
-  home-manager.users.zell.programs.git.aliases = {
-    l = "!. ~/.githelpers && pretty_git_log";
+{ homeDirectory, user, ... }: {
+  home-manager.users.${user} = {
+    home.file = {
+      "${homeDirectory}/.githelpers".source = ./.githelpers;
+    };
+    programs.git.aliases = {
+      l = "!. ~/.githelpers && pretty_git_log";
+    };
   };
 }

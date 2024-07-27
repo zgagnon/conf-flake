@@ -1,15 +1,14 @@
-{ pkgs, lib,  ... }:
+{ pkgs, lib, config, ... }:
 let
   homebrew = import ./homebrew.nix;
-  homeDirectory = "/Users/zell";
+  homeDirectory = "/Users/zoe";
   gitmessage = ./.gitmessage;
-  email = "zell@mechanical-orchard.com";
+  email = "zoe@zgagnon.com";
   packages = import ./home-manager.nix { inherit pkgs; };
-
 
   submoduleConfig = {
     inherit lib pkgs gitmessage homeDirectory email homebrew;
-    user = "zell";
+    user = "zoe";
     };
 
   submodules = [
@@ -27,13 +26,15 @@ let
 in {
   imports = builtins.map applySubmodule submodules;
 
+  homebrew = homebrew;
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = { pkgs, config, emacs-ng, ... }: {
+    users.zoe = { pkgs, config, emacs-ng, ... }: {
       home = {
-        stateVersion = "23.11";
-        username = lib.mkDefault "zell";
+        stateVersion = "24.05";
+        username = lib.mkDefault "zoe";
         homeDirectory = lib.mkForce homeDirectory;
 
          sessionVariables = { EDITOR = "vim"; };

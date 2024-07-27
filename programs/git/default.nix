@@ -1,10 +1,10 @@
-{ lib, gitmessage, pkgs, homeDirectory, email, ... }: let
+{ lib, gitmessage, pkgs, homeDirectory, email, user, ... }: let
 aliases = import ./aliases.nix;
     in{
-  home-manager.users.zell.home.file = {
+  home-manager.users.zoe.home.file = {
     "${homeDirectory}/.gitmessage".source = gitmessage;
   };
-  home-manager.users.zell.programs.git = {
+  home-manager.users.zoe.programs.git = {
     aliases = aliases;
     enable = true;
     extraConfig = { commit = { template = "~/.gitmessage"; }; };

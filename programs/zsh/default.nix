@@ -1,13 +1,13 @@
-{...}:
+{user, ...}:
 {
-  home-manager.users.zell.programs.zsh = {
+  home-manager.users.${user}.programs.zsh = {
         enable = true;
         autosuggestion.enable = true;
         initExtra = builtins.concatStringsSep "\n" [
           "export EDITOR=vim"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
-          "export DOOMDIR=\"$HOME/darwin-flake/doom\""
+          "export DOOMDIR=\"$HOME/conf-flake/doom\""
           ''eval "$(fasd --init auto)"''
           "alias g=git"
           "alias v='f -e vim'"
@@ -20,7 +20,7 @@
           "alias clean-branches='git for-each-ref --format=\"%(refname:short)\" refs/heads | grep -v main | xargs -L1 git branch -D'"
           "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
           "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
-          ''eval "$(/opt/homebrew/bin/brew shellenv)"''
+          ''eval "$(/usr/local/bin/brew shellenv)"''
           ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake/switcher"''
                 ];
 

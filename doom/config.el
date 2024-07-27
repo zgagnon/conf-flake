@@ -15,7 +15,7 @@
 ;; We can then use it to set the fonts. See 'C-h v doom-font' for documentation and more examples of what they accept.
 
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 18 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 18)
+     doom-variable-pitch-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-symbol-font (font-spec :family "FiraCode Nerd Font" :size 18)
       doom-serif-font (font-spec :family "FiraCode Nerd Font" :size 18))
 

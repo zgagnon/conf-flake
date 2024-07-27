@@ -89,7 +89,7 @@ doom-dashboard    ; a nifty splash screen for Emacs
 ;; Allows using emoji in the app. Include the unicode and github support
 
 
-(emoji +unicode +github)  ; 🙂
+;       (emoji +unicode +github)  ; 🙂
 
 ;; Hightlight TODO
 

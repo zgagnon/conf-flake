@@ -1,5 +1,5 @@
 { homeDirectory,pkgs, ... }: {
-  home-manager.users.zell.home.file = {
+  home-manager.users.zoe.home.file = {
     "${homeDirectory}/.hammerspoon/Spoons/PaperWM.spoon".source =
       pkgs.fetchgit {
         url = "https://github.com/mogenson/PaperWM.spoon.git";
