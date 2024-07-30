@@ -319,6 +319,7 @@ Manages projects
 #+begin_src elisp :tangle config.el
 (after! projectile
   (projectile-add-known-project "~/kohls/cics"))
+(setq +workspaces-on-switch-project-behavior nil)
 #+end_src
 
 *** Persepective

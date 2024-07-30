@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: argc
+# uuid:
+# key: argc
+# condition: t
+eval "$(argc --argc-eval "$0" "$@")"
+# --

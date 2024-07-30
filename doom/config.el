@@ -55,6 +55,7 @@
 
 (after! projectile
   (projectile-add-known-project "~/kohls/cics"))
+(setq +workspaces-on-switch-project-behavior nil)
 
 ;; Create a tab bar across the top of the screen
 
@@ -169,7 +170,7 @@ name as well to trigger updates"
 ;(add-hook 'elixir-mode-hook
 ;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
- (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
+(setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
 
 (use-package! alchemist
   :hook (elixir-mode . alchemist-mode)
