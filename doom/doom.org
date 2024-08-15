@@ -8,7 +8,7 @@ This is a literate config, so we must put the location at the front of the `init
 #+begin_src elisp :tangle init.el
 ;;; $DOOMDIR/init.el -*- lexical-binding: t; -*-
 
-(setq +literate-config-file "README.org")
+(setq +literate-config-file "doom.org")
 
 (doom! :input
 #+end_src
