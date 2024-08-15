@@ -1,5 +1,5 @@
-{ ... }: {
-  home-manager.users.zell.programs.vim = {
+{ user, ... }: {
+  home-manager.users.${user}.programs.vim = {
     enable = true;
     settings = {
       number = true;

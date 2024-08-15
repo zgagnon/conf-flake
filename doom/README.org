@@ -1180,7 +1180,7 @@ Write once, debug everywhere
 
 Runs in the operating system of the present (browser)
 #+begin_src elisp :tangle init.el
-       ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp +treesitter)        ; all(hope(abandon(ye(who(enter(here))))))
 #+end_src
 
 *** Julia
@@ -1423,7 +1423,7 @@ Standalone low-level language of lua
 
 Web?
 #+begin_src elisp :tangle init.el
-       web               ; the tubes
+       (web +lsp)                ; the tubes
 #+end_src
 
 *** YAML

@@ -203,7 +203,7 @@ workspaces        ; tab emulation, persistence & separate workspaces
 
 ;; Zen Mode
 
-;; Does a lot of changes that I don't like
+;; Does a lot of changes that I don't like hrr
 
 ;;zen               ; distraction-free coding or writing
 
@@ -375,7 +375,7 @@ json              ; At least it ain't XML
 
 ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
 
-;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
+(javascript +lsp +treesitter)        ; all(hope(abandon(ye(who(enter(here))))))
 
 ;;julia             ; a better, faster MATLAB
 
@@ -435,7 +435,7 @@ sh                ; she sells {ba,z,fi}sh shells on the C xor
 
 ;;terra             ; Earth and Moon in alignment for performance.
 
-web               ; the tubes
+(web +lsp)                ; the tubes
 
 yaml              ; JSON, but readable
 
