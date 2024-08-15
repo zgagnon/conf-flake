@@ -932,7 +932,7 @@ Everyone wants fast ruby, but not typed ruby
 
 Cause Microsoft didn't own java
 #+begin_src elisp :tangle init.el
-       ;;csharp            ; unity, .NET, and mono shenanigans
+       (csharp +dotnet +lsp +tree-sitter)            ; unity, .NET, and mono shenanigans
 #+end_src
 
 *** Data
