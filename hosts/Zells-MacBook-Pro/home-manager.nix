@@ -5,6 +5,7 @@ with pkgs; [
   anki-bin
   bat
   cabal-install
+  cachix
   discord
   elixir_1_16
   elixir_ls
@@ -23,8 +24,8 @@ with pkgs; [
   just
   kubectx
   kubernetes-helm
+  omnisharp-roslyn
   mob
-  neovim
   nodejs
   pandoc
   ripgrep

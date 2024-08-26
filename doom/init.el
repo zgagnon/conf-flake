@@ -89,7 +89,7 @@ doom-dashboard    ; a nifty splash screen for Emacs
 ;; Allows using emoji in the app. Include the unicode and github support
 
 
-;       (emoji +unicode +github)  ; 🙂
+(emoji +unicode +github)  ; 🙂
 
 ;; Hightlight TODO
 
@@ -203,7 +203,7 @@ workspaces        ; tab emulation, persistence & separate workspaces
 
 ;; Zen Mode
 
-;; Does a lot of changes that I don't like hrr
+;; Does a lot of changes that I don't like
 
 ;;zen               ; distraction-free coding or writing
 
@@ -375,7 +375,7 @@ json              ; At least it ain't XML
 
 ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
 
-(javascript +lsp +treesitter)        ; all(hope(abandon(ye(who(enter(here))))))
+(javascript +lsp +treesitter +jest)        ; all(hope(abandon(ye(who(enter(here))))))
 
 ;;julia             ; a better, faster MATLAB
 

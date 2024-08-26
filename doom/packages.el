@@ -6,6 +6,17 @@
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
 
+;; Projectile
+
+;; Manages projects
+
+;; Install the 'rg' package to use native OS ripgrep command
+
+(use-package rg
+  :ensure t
+  :config
+  (rg-enable-default-bindings))
+
 ;; Super-Save Mode
 ;; :PROPERTIES:
 ;; :header-args: :comments org

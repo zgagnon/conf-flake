@@ -21,6 +21,7 @@
           "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
           ''eval "$(/opt/homebrew/bin/brew shellenv)"''
           ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake"''
+          ''export AUTO_ENABLE_FLAKES=true''
                 ];
 
         history = {

@@ -129,7 +129,7 @@ We can then use it to set the fonts. See 'C-h v doom-font' for documentation and
 And the theme. doom-fairy-floss is purple, good for day and night
 #+begin_src elisp :tangle config.el
 
-(setq doom-theme 'doom-library)
+(setq doom-theme 'doom-dracula)
 #+end_src
 
 *** Doom Dashboard
@@ -152,7 +152,7 @@ Allows customizing the quit interaction
 Allows using emoji in the app. Include the unicode and github support
 
 #+begin_src elisp :tangle init.el
-;       (emoji +unicode +github)  ; 🙂
+       (emoji +unicode +github)  ; 🙂
 #+end_src
 
 *** Hightlight TODO
@@ -305,7 +305,7 @@ Add tabs and persistant workspaces
 
 *** Zen Mode
 
-Does a lot of changes that I don't like hrr
+Does a lot of changes that I don't like
 #+begin_src elisp :tangle init.el
        ;;zen               ; distraction-free coding or writing
 #+end_src
@@ -316,11 +316,20 @@ Does a lot of changes that I don't like hrr
 
 Manages projects
 
-#+begin_src elisp :tangle config.el
-(after! projectile
-  (projectile-add-known-project "~/kohls/cics"))
-(setq +workspaces-on-switch-project-behavior nil)
+Install the 'rg' package to use native OS ripgrep command
+#+begin_src elisp :tangle packages.el
+(use-package rg
+  :ensure t
+  :config
+  (rg-enable-default-bindings))
+
 #+end_src
+
+#+begin_src elisp :tangle config.el
+(setq +workspaces-on-switch-project-behavior nil)
+(setq projectile-indexing-method 'alien)
+#+end_src
+
 
 *** Persepective
 
@@ -757,6 +766,8 @@ What if emacs was an IDE? (It's not)
                   lsp-ui-sideline-ignore-duplicate t
                   lsp-ui-sideline-enable t))
 
+(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold 100000000)
  #+end_src
 *** Magit
 
@@ -1180,7 +1191,7 @@ Write once, debug everywhere
 
 Runs in the operating system of the present (browser)
 #+begin_src elisp :tangle init.el
-       (javascript +lsp +treesitter)        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp +treesitter +jest)        ; all(hope(abandon(ye(who(enter(here))))))
 #+end_src
 
 *** Julia

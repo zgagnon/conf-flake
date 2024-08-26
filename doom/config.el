@@ -26,7 +26,7 @@
 
 ;; And the theme. doom-fairy-floss is purple, good for day and night
 
-(setq doom-theme 'doom-library)
+(setq doom-theme 'doom-dracula)
 
 
 
@@ -48,14 +48,8 @@
 (after! treemacs
                   (setq treemacs-indent-guide-style "line"))
 
-;; Projectile
-
-;; Manages projects
-
-
-(after! projectile
-  (projectile-add-known-project "~/kohls/cics"))
 (setq +workspaces-on-switch-project-behavior nil)
+(setq projectile-indexing-method 'alien)
 
 ;; Create a tab bar across the top of the screen
 
@@ -157,6 +151,9 @@ name as well to trigger updates"
                   lsp-ui-sideline-diagnostic-max-lines 20
                   lsp-ui-sideline-ignore-duplicate t
                   lsp-ui-sideline-enable t))
+
+(setq read-process-output-max (* 1024 1024))
+(setq gc-cons-threshold 100000000)
 
 ;(after! cobol-mode (setq auto-mode-alist
       ;; (append

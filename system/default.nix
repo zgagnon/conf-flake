@@ -35,7 +35,7 @@
   services.nix-daemon.enable = true;
 
   programs.zsh.enable = true;
-  environment.systemPackages = [ pkgs.neovim ];
+  environment.systemPackages = [ pkgs.vim ];
 
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
