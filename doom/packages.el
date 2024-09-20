@@ -41,6 +41,8 @@
         (package! alchemist)
     )
 
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+
 ;; Packages
 ;; :PROPERTIES:
 ;; :header-args: :tangle packages.el :comments org

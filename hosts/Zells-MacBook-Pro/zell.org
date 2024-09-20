@@ -79,24 +79,24 @@ These packages are installed via homebrew
   taps = [ "homebrew/cask-fonts" ];
 
   casks = [
-    "skype"
+    "arc"
     "cursor"
+    "docker"
+    "font-fira-mono-nerd-font"
+    "google-chrome"
+    "hammerspoon"
+    "logseq"
     "notion"
     "orbstack"
-    "hammerspoon"
-    "zoom"
-    "font-fira-mono-nerd-font"
-    "logseq"
     "raycast"
-    "slack"
-    "tuple"
-    "tandem"
-    "warp"
-    "arc"
     "readdle-spark"
-    "docker"
+    "slack"
     "spotify"
-    "google-chrome"
+    "tandem"
+    "tuple"
+    "warp"
+    "zoom"
+    "skype"
     "soundsource"
   ];
 }
@@ -142,6 +142,7 @@ with pkgs; [
   shfmt
   stgit
   terraform
+  teams
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
   vscodium

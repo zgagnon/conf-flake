@@ -167,7 +167,7 @@ name as well to trigger updates"
 ;(add-hook 'elixir-mode-hook
 ;         (lambda () (add-hook 'before-save-hook 'elixir-format nil t)))
 
- (setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
+(setq alchemist-mix-command "/etc/profiles/per-user/zell/bin/mix")
 
 (use-package! alchemist
   :hook (elixir-mode . alchemist-mode)
@@ -222,7 +222,7 @@ lsp-ui-sideline-enable t))
    (emacs-lisp . t)
    ))
 
-(add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+;(add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
 
 (setq org-directory "~/logseq/")
 (setq org-roam-directory "~/logseq/")
@@ -236,3 +236,5 @@ lsp-ui-sideline-enable t))
   `(org-level-5 :family "Rockwell" :height 150)
   `(org-level-6 :family "Rockwell" :height 150)
                 )
+
+(use-package! lsp-tailwindcss)

@@ -56,7 +56,19 @@ Company is an in-line auto complete for suggestions. We can control if the sugge
 in a childframe or popover
 
 #+begin_src elisp :tangle init.el
-       (company +childframe)           ; the ultimate code completion backend
+       ;(company +childframe)           ; the ultimate code completion backend
+#+end_src
+
+** Corfu
+:PROPERTIES:
+:header-args: :comments org
+:END:
+
+
+Corfu is a completions framework that replaces Company
+
+#+begin_src elisp :tangle init.el
+        (corfu +icons +orderless)
 #+end_src
 
 ** Search
@@ -749,6 +761,10 @@ What if emacs was an IDE? (It's not)
        (lsp +peek)               ; M-x vscode
 #+end_src
 
+#+begin_src elisp :tangle early-init.el
+(setenv "LSP_USE_PLISTS" "true")
+#+end_src
+
  Set global LSP options
  #+begin_src elisp :tangle config.el
 
@@ -1279,7 +1295,7 @@ Not logseq (edit: YOU FOOL! Logseq support org format!!)
    (emacs-lisp . t)
    ))
 
-(add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
+;(add-hook 'after-save-hook (lambda ()(if (y-or-n-p "Tangle?")(org-babel-tangle))) nil t)
  #+end_src
 
  If you use `org' and don't want your org files in the default location below,
@@ -1430,6 +1446,30 @@ Standalone low-level language of lua
        ;;terra             ; Earth and Moon in alignment for performance.
 #+end_src
 
+*** Typescript
+
+#+begin_src elisp :tangle packages.el
+(use-package! typescript-mode
+  :defer
+  :mode "\\.ts\\'" ; set the mode as default for .ts files
+  :config
+  (require 'dap-node) ; enable the debugger
+  (dap-node-setup) ; setup the debugger
+  (setq typescript-indent-level 2) ; set typescript indent level
+  (add-hook 'typescript-mode-hook #'add-node-modules-path) ; for mono-repo support
+  (add-hook 'typescript-mode-hook #'prettier-js-mode) ; use the prettier config of the project
+)
+
+(use-package! typescript-tsx-mode ; automatically installed with (javascript +lsp)
+  :defer
+  :mode  "\\.tsx\\'" ; default for .tsx files
+  :config ; see above
+  (add-hook 'typescript-tsx-mode-hook #'add-node-modules-path)
+  (add-hook 'typescript-tsx-mode-hook #'prettier-js-mode)
+)
+
+#+end
+
 *** Web
 
 Web?
@@ -1437,6 +1477,15 @@ Web?
        (web +lsp)                ; the tubes
 #+end_src
 
+**** Tailwind CSS
+
+#+begin_src elisp :tangle packages.el
+(package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
+#+end_src
+
+#+begin_src elisp :tangle config.el
+(use-package! lsp-tailwindcss)
+#+end_src
 *** YAML
 
 JSON, with invisible brackets
