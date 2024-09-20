@@ -33,7 +33,6 @@ with pkgs; [
   shfmt
   stgit
   terraform
-  teams
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
   vscodium

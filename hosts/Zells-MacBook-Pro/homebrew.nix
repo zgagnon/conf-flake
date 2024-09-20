@@ -22,6 +22,7 @@
     "warp"
     "zoom"
     "skype"
+    "microsoft-teams"
     "soundsource"
   ];
 }

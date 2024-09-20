@@ -97,6 +97,7 @@ These packages are installed via homebrew
     "warp"
     "zoom"
     "skype"
+    "microsoft-teams"
     "soundsource"
   ];
 }
@@ -142,7 +143,6 @@ with pkgs; [
   shfmt
   stgit
   terraform
-  teams
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
   vscodium
