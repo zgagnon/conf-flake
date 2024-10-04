@@ -51,5 +51,6 @@
 
 
 (package! just-mode)
+(package! csv-mode)
 
 (package! evil-commentary)
