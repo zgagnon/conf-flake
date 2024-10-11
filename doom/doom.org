@@ -1537,16 +1537,3 @@ Here we will install any packages not found in the default modules
 #+begin_src elisp :tangle packages.el
 (package! evil-commentary)
 #+end_src
-
-** Advanced Tangling
-using an intermediate file to process includes
-
-#+begin_src elisp :tangle config.el
-(defun export-and-tangle-file (file)
-  "Export FILE to Org, then tangle it."
-  (interactive "fChoose file to export and tangle: ")
-  (with-current-buffer (find-file-noselect file)
-    (org-export-to-file 'org "exported.org")
-    (org-babel-tangle-file "exported.org")
-    (message "Exported and tangled %s" file)))
-#+end_src

@@ -221,11 +221,3 @@ lsp-ui-sideline-enable t))
                 )
 
 (use-package! lsp-tailwindcss)
-
-(defun export-and-tangle-file (file)
-  "Export FILE to Org, then tangle it."
-  (interactive "fChoose file to export and tangle: ")
-  (with-current-buffer (find-file-noselect file)
-    (org-export-to-file 'org "exported.org")
-    (org-babel-tangle-file "exported.org")
-    (message "Exported and tangled %s" file)))
