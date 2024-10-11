@@ -4,7 +4,6 @@
         enable = true;
         autosuggestion.enable = true;
         initExtra = builtins.concatStringsSep "\n" [
-          "export EDITOR=vim"
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
           "export DOOMDIR=\"$HOME/conf-flake/doom\""
@@ -21,7 +20,9 @@
           "alias clean-branches-remote='git for-each-ref --format=\"%(refname:short)\" refs/remotes | grep -v origin/main | xargs -L1 git branch -D --remote'"
           "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
           ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake/switcher"''
-          ''export AUTO_ENABLE_FLAKES=true''                ];
+          ''export AUTO_ENABLE_FLAKES=true''
+          "export EDITOR=em"
+        ];
 
         history = {
           ignoreSpace = true;

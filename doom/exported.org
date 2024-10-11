@@ -1,0 +1,6 @@
+# Created 2024-10-11 Fri 18:11
+#+title: DOOM init
+#+author: Zoe Gagnon
+#+auto-tangle: true
+
+[[elisp:(export-and-tangle-file "doom.org")][Export and Tangle]]

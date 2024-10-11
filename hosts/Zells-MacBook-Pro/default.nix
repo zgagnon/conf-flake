@@ -30,7 +30,7 @@ in {
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.zell = { pkgs, config, emacs-ng, ... }: {
+    users.zell = { pkgs, config,  ... }: {
       home = {
         stateVersion = "23.11";
         username = lib.mkDefault "zell";
