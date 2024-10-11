@@ -1,4 +1,5 @@
 { lib, pkgs, user, ... }: {
+system.stateVersion = 5;
   nixpkgs = { config.allowUnfree = true; };
   nix = {
     package = pkgs.nixVersions.latest;

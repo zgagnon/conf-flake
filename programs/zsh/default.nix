@@ -6,7 +6,7 @@
         initExtra = builtins.concatStringsSep "\n" [
           "if [ -e $HOME/.profile ]; then . $HOME/.profile; fi"
           "export NIXPKGS_ALLOW_UNFREE=1"
-          "export DOOMDIR=\"$HOME/conf-flake/doom\""
+          "export DOOMDIR=\"$HOME/.doom.d\""
           ''eval "$(fasd --init auto)"''
           "alias g=git"
           "alias v='f -e vim'"
