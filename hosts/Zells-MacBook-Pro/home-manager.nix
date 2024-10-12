@@ -8,7 +8,7 @@ with pkgs; [
   cachix
   discord
   elixir_1_16
-  elixir_ls
+  elixir-ls
   emacs
   erlfmt
   eza
@@ -26,7 +26,9 @@ with pkgs; [
   kubernetes-helm
   omnisharp-roslyn
   mob
+nil
   nodejs
+nodePackages.typescript-language-server
   pandoc
   ripgrep
   shellcheck
