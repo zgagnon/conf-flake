@@ -5,6 +5,8 @@ with pkgs; [
   anki-bin
   bat
   cabal-install
+  coreutils
+  csharpier
   cachix
   discord
   elixir_1_16
@@ -18,6 +20,9 @@ with pkgs; [
   fira-code
   google-cloud-sdk
   gnugrep
+nixfmt-rfc-style
+  nodePackages.js-beautify
+  stylelint
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
