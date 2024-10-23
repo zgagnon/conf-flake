@@ -20,6 +20,7 @@ with pkgs; [
   fira-code
   google-cloud-sdk
   gnugrep
+emacs-lsp-booster
 nixfmt-rfc-style
   nodePackages.js-beautify
   stylelint
