@@ -10,7 +10,7 @@ with pkgs; [
   cachix
   discord
   elixir_1_16
-  elixir-ls
+  lexical
   emacs
   erlfmt
   eza
