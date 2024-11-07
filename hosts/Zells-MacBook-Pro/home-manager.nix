@@ -36,6 +36,7 @@ nil
   nodejs
 nodePackages.typescript-language-server
   pandoc
+  pgadmin4-desktopmode
   ripgrep
   shellcheck
   shfmt

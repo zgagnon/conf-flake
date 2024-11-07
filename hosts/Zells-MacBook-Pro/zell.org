@@ -88,6 +88,7 @@ These packages are installed via homebrew
     "logseq"
     "notion"
     "orbstack"
+    "kitty"
     "raycast"
     "readdle-spark"
     "slack"
@@ -146,6 +147,7 @@ nil
   nodejs
 nodePackages.typescript-language-server
   pandoc
+  pgadmin4-desktopmode
   ripgrep
   shellcheck
   shfmt
