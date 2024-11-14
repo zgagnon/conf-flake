@@ -1,0 +1,48 @@
+{
+  homeDirectory,
+  lib,
+  pkgs,
+  user,
+  ...
+}:
+{
+  home-manager.users.${user} =
+    { config, ... }:
+    {
+      home = {
+        file.".1password/agent.sock" = lib.mkIf pkgs.stdenv.isDarwin {
+          source = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+        };
+
+        sessionVariables = {
+          SSH_AUTH_SOCK = "${homeDirectory}/.1password/agent.sock";
+        };
+      };
+
+      programs.git = {
+        signing = {
+          key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBw43UgKpS9/bxfyP9y8R0enylSCNdVc5OgPKB64IJGC";
+          signByDefault = true;
+        };
+
+        extraConfig = {
+          gpg = {
+            format = "ssh";
+          };
+          "gpg \"ssh\"" = lib.mkIf pkgs.stdenv.isDarwin {
+            program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+          };
+        };
+      };
+
+      programs.ssh = {
+        enable = true;
+
+        matchBlocks."github.com" = {
+          extraOptions = {
+            IdentityAgent = "~/.1password/agent.sock";
+          };
+        };
+      };
+    };
+}

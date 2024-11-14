@@ -1,50 +1,39 @@
-{ pkgs, lib,  ... }:
+{
+  pkgs,
+  extraPackages,
+  home-manager,
+  ...
+}@inputs:
 let
-  homebrew = import ./homebrew.nix;
   homeDirectory = "/Users/zell";
-  gitmessage = ./.gitmessage;
-  email = "zell@mechanical-orchard.com";
-  packages = import ./home-manager.nix { inherit pkgs; };
-
-
-  submoduleConfig = {
-    inherit lib pkgs gitmessage homeDirectory email homebrew;
-    user = "zell";
+  system = import ../../system "zell" inputs;
+  mac = import ../../os/mac;
+  lib = pkgs.lib;
+  user = "zell";
+in
+[
+  system
+  mac
+  home-manager.darwinModules.home-manager
+  {
+    imports = [
+      (import ../../new-progs/onep.nix {
+        inherit homeDirectory lib pkgs;
+        user = "zell";
+      })
+      (import ../../new-progs/git.nix {
+        inherit lib pkgs homeDirectory;
+        gitmessage = ./.gitmessage;
+        email = "zoe.gagnon@mechanical-orchard.com";
+        user = "zell";
+      })
+      (import ../../new-progs/paperwm.nix { inherit pkgs user homeDirectory; })
+    ];
+    home-manager.extraSpecialArgs = {
+      inherit extraPackages homeDirectory user;
     };
-
-  submodules = [
-    ../../system
-    ../../os/mac
-    ../../programs/direnv
-    ../../programs/zsh
-    ../../programs/homebrew
-    ../../programs/git
-    ../../programs/git/column-log
-    ../../programs/paperwm.spoon
-    ../../programs/1password
-  ];
-  applySubmodule = x: (import x submoduleConfig);
-in {
-  imports = builtins.map applySubmodule submodules;
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.zell = { pkgs, config,  ... }: {
-      home = {
-        stateVersion = "23.11";
-        username = lib.mkDefault "zell";
-        homeDirectory = lib.mkForce homeDirectory;
-
-         sessionVariables = { EDITOR = "vim"; };
-
-        packages = packages;
-      };
-      programs.home-manager.enable = true;
-      programs.fzf = {
-        enable = true;
-        enableZshIntegration = true;
-      };
-    };
-  };
-}
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.zell = import ./home.nix;
+  }
+]

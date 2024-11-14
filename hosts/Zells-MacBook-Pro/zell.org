@@ -16,8 +16,8 @@
 - [[file:../../programs/git/README.org][GIT]]
 
 Binaries are installed via brew and home manager and are listed below
-#+begin_src nix :tangle default.nix
-{ pkgs, lib,  ... }:
+#+begin_src nix
+{ pkgs, lib, extraPkgs, ... }:
 let
   homebrew = import ./homebrew.nix;
   homeDirectory = "/Users/zell";
@@ -41,6 +41,9 @@ let
     ../../programs/git/column-log
     ../../programs/paperwm.spoon
     ../../programs/1password
+    ../../programs/kitty
+    ../../programs/nushell
+    ../../programs/wezterm
   ];
   applySubmodule = x: (import x submoduleConfig);
 in {
@@ -72,7 +75,7 @@ in {
 ** Homebrew Installs
 These packages are installed via homebrew
 
-#+begin_src nix :tangle ./homebrew.nix
+#+begin_src nix
 {
   brews = [ "exercism" ];
 
@@ -88,7 +91,6 @@ These packages are installed via homebrew
     "logseq"
     "notion"
     "orbstack"
-    "kitty"
     "raycast"
     "readdle-spark"
     "slack"
@@ -108,7 +110,7 @@ These packages are installed via homebrew
 ** Home Manager Installs
 These packages are installed via nix itself
 
-#+begin_src nix :tangle ./home-manager.nix
+#+begin_src nix
 { pkgs,... }:
 with pkgs; [
   _1password

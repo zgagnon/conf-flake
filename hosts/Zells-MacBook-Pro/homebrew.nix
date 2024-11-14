@@ -13,7 +13,6 @@
     "logseq"
     "notion"
     "orbstack"
-    "kitty"
     "raycast"
     "readdle-spark"
     "slack"

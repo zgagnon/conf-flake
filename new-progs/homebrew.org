@@ -1,0 +1,17 @@
+* Homebrew
+:PROPERTIES:
+:header-args: :tangle homebrew.nix
+:END:
+
+#+begin_src nix
+overrides: {
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+    };
+  } // overrides;
+}
+
+#+end_src

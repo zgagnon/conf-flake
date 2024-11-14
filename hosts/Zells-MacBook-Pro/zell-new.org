@@ -1,0 +1,168 @@
+* New Zell Flake
+
+** The Flake Modules
+#+begin_src nix :tangle default.nix
+{
+  pkgs,
+  extraPackages,
+  home-manager,
+  ...
+}@inputs:
+let
+  homeDirectory = "/Users/zell";
+  system = import ../../system "zell" inputs;
+  mac = import ../../os/mac;
+  lib = pkgs.lib;
+  user = "zell";
+in
+[
+  system
+  mac
+  home-manager.darwinModules.home-manager
+  {
+    imports = [
+      (import ../../new-progs/onep.nix {
+        inherit homeDirectory lib pkgs;
+        user = "zell";
+      })
+      (import ../../new-progs/git.nix {
+        inherit lib pkgs homeDirectory;
+        gitmessage = ./.gitmessage;
+        email = "zoe.gagnon@mechanical-orchard.com";
+        user = "zell";
+      })
+      (import ../../new-progs/paperwm.nix { inherit pkgs user homeDirectory; })
+    ];
+    home-manager.extraSpecialArgs = {
+      inherit extraPackages homeDirectory user;
+    };
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.zell = import ./home.nix;
+  }
+]
+#+end_src
+
+** The Home Manager
+#+begin_src nix :tangle home.nix
+{
+  pkgs,
+  specialArgs,
+  config,
+  ...
+}:
+let
+  lib = pkgs.lib;
+  homebrewPackages = import ./homebrew.nix;
+  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
+  kitty = import ../../new-progs/kitty.nix { inherit pkgs; } { };
+  nushell = import ../../new-progs/nushell.nix { inherit pkgs; };
+  zsh = import ../../new-progs/zsh.nix;
+  direnv = import ../../new-progs/direnv.nix;
+  wezterm = import ../../new-progs/wezterm.nix {
+package = specialArgs.extraPackages.wezterm;
+  };
+  programs = kitty // nushell // zsh // direnv // wezterm;
+
+in
+{
+  inherit programs;
+  home = {
+    stateVersion = "23.11";
+    username = lib.mkDefault "zell";
+    homeDirectory = lib.mkForce "/Users/zell";
+    packages = import ./home-manager.nix { inherit pkgs; };
+  };
+}
+#+end_src
+
+** Home Manager Installs
+These packages are installed via nix itself
+
+#+begin_src nix :tangle ./home-manager.nix
+{ pkgs, ... }:
+with pkgs;
+[
+  _1password
+  action-validator
+  anki-bin
+  bat
+  cabal-install
+  cachix
+  coreutils
+  csharpier
+  direnv
+  discord
+  elixir_1_16
+  emacs
+  emacs-lsp-booster
+  erlfmt
+  eza
+  fasd
+  fd
+  figlet
+  fira-code
+  gh
+  gnugrep
+  google-cloud-sdk
+  haskellPackages.hoogle
+  haskellPackages.lsp
+  jetbrains.idea-community
+  just
+  kubectx
+  kubernetes-helm
+  lexical
+  mob
+  nil
+  nixfmt-rfc-style
+  nodePackages.js-beautify
+  nodePackages.typescript-language-server
+  nodejs
+  omnisharp-roslyn
+  pandoc
+  pgadmin4-desktopmode
+  ripgrep
+  shellcheck
+  shfmt
+  stgit
+  stylelint
+  terraform
+  tree-sitter
+  tree-sitter-grammars.tree-sitter-heex
+  vscodium
+]
+#+end_src
+
+** Homebrew Installs
+These packages are installed via homebrew
+
+#+begin_src nix :tangle ./homebrew.nix
+{
+  brews = [ "exercism" ];
+
+  taps = [ "homebrew/cask-fonts" ];
+
+  casks = [
+    "arc"
+    "cursor"
+    "docker"
+    "font-fira-mono-nerd-font"
+    "google-chrome"
+    "hammerspoon"
+    "logseq"
+    "notion"
+    "orbstack"
+    "raycast"
+    "readdle-spark"
+    "slack"
+    "spotify"
+    "tandem"
+    "tuple"
+    "warp"
+    "zoom"
+    "skype"
+    "microsoft-teams"
+    "soundsource"
+  ];
+}
+#+end_src
