@@ -8,12 +8,15 @@ let
   homeDirectory = "/Users/zell";
   system = import ../../system "zell" inputs;
   mac = import ../../os/mac;
+  homebrewPackages = import ./homebrew.nix;
+  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
   lib = pkgs.lib;
   user = "zell";
 in
 [
   system
   mac
+  homebrew
   home-manager.darwinModules.home-manager
   {
     imports = [

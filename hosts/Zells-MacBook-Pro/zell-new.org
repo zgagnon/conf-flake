@@ -12,12 +12,15 @@ let
   homeDirectory = "/Users/zell";
   system = import ../../system "zell" inputs;
   mac = import ../../os/mac;
+  homebrewPackages = import ./homebrew.nix;
+  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
   lib = pkgs.lib;
   user = "zell";
 in
 [
   system
   mac
+  homebrew
   home-manager.darwinModules.home-manager
   {
     imports = [
@@ -53,8 +56,6 @@ in
 }:
 let
   lib = pkgs.lib;
-  homebrewPackages = import ./homebrew.nix;
-  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
   kitty = import ../../new-progs/kitty.nix { inherit pkgs; } { };
   nushell = import ../../new-progs/nushell.nix { inherit pkgs; };
   zsh = import ../../new-progs/zsh.nix;
@@ -140,13 +141,16 @@ These packages are installed via homebrew
 {
   brews = [ "exercism" ];
 
-  taps = [ "homebrew/cask-fonts" ];
+  taps = [ "homebrew/cask-fonts"
+         ];
+
 
   casks = [
     "arc"
     "cursor"
     "docker"
     "font-fira-mono-nerd-font"
+    "nikitabobko/tap/aerospace"
     "google-chrome"
     "hammerspoon"
     "logseq"

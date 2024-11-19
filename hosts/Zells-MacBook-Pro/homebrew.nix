@@ -1,13 +1,16 @@
 {
   brews = [ "exercism" ];
 
-  taps = [ "homebrew/cask-fonts" ];
+  taps = [ "homebrew/cask-fonts"
+         ];
+
 
   casks = [
     "arc"
     "cursor"
     "docker"
     "font-fira-mono-nerd-font"
+    "nikitabobko/tap/aerospace"
     "google-chrome"
     "hammerspoon"
     "logseq"

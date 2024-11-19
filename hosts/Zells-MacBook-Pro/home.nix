@@ -6,8 +6,6 @@
 }:
 let
   lib = pkgs.lib;
-  homebrewPackages = import ./homebrew.nix;
-  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
   kitty = import ../../new-progs/kitty.nix { inherit pkgs; } { };
   nushell = import ../../new-progs/nushell.nix { inherit pkgs; };
   zsh = import ../../new-progs/zsh.nix;
