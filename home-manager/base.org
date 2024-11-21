@@ -1,4 +1,4 @@
-* New Zell Flake
+* Home Manager Base
 
 ** The Flake Modules
 #+begin_src nix :tangle default.nix
@@ -6,16 +6,17 @@
   pkgs,
   extraPackages,
   home-manager,
+  homeDirectory,
+  user,
+  email,
   ...
 }@inputs:
 let
-  homeDirectory = "/Users/zell";
-  system = import ../../system "zell" inputs;
-  mac = import ../../os/mac;
+  system = import ../system user inputs;
+  mac = import ../os/mac;
   homebrewPackages = import ./homebrew.nix;
-  homebrew = import ../../new-progs/homebrew.nix homebrewPackages;
+  homebrew = import ../new-progs/homebrew.nix homebrewPackages;
   lib = pkgs.lib;
-  user = "zell";
 in
 [
   system
@@ -24,20 +25,15 @@ in
   home-manager.darwinModules.home-manager
   {
     imports = [
-      (import ../../new-progs/onep.nix {
-        inherit homeDirectory lib pkgs;
-        user = "zell";
+      (import ../new-progs/onep.nix {
+        inherit homeDirectory lib pkgs user;
       })
-      (import ../../new-progs/git.nix {
-        inherit lib pkgs homeDirectory;
-        gitmessage = ./.gitmessage;
-        email = "zoe.gagnon@mechanical-orchard.com";
-        user = "zell";
+      (import ../new-progs/git.nix {
+        inherit lib pkgs homeDirectory user email;
       })
-      (import ../../new-progs/paperwm.nix { inherit pkgs user homeDirectory; })
     ];
     home-manager.extraSpecialArgs = {
-      inherit extraPackages homeDirectory user;
+      inherit extraPackages homeDirectory user email;
     };
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
@@ -56,33 +52,26 @@ in
 }:
 let
   lib = pkgs.lib;
-  nushell = import ../../new-progs/nushell.nix { inherit pkgs; };
-  zsh = import ../../new-progs/zsh.nix;
-  direnv = import ../../new-progs/direnv.nix;
-  wezterm = import ../../new-progs/wezterm.nix {
-    package = specialArgs.extraPackages.wezterm;
-  };
-  programs = nushell // zsh // direnv // wezterm;
 in
 {
   imports = [
-    ../../home-manager/modules/aerospace.nix
+    ./modules/aerospace.nix
   ];
   # inherit programs;
-  programs.aerospace = import ../../home-manager/program-config/aerospace.nix;
-  programs.wezterm = import ../../home-manager/program-config/wezterm.nix {
+  programs.aerospace = import ./program-config/aerospace.nix;
+  programs.wezterm = import ./program-config/wezterm.nix {
     package = specialArgs.extraPackages.wezterm;
   };
-  programs.nushell = import ../../home-manager/program-config/nushell.nix;
-  programs.starship = import ../../home-manager/program-config/starship.nix { inherit lib; };
-  programs.carapace = import ../../home-manager/program-config/carapace.nix;
-  programs.atuin = import ../../home-manager/program-config/atuin.nix;
-  programs.zoxide = import ../../home-manager/program-config/zoxide.nix;
-  programs.direnv = import ../../home-manager/program-config/direnv.nix;
+  programs.nushell = import ./program-config/nushell.nix;
+  programs.starship = import ./program-config/starship.nix { inherit lib; };
+  programs.carapace = import ./program-config/carapace.nix;
+  programs.atuin = import ./program-config/atuin.nix;
+  programs.zoxide = import ./program-config/zoxide.nix;
+  programs.direnv = import ./program-config/direnv.nix;
   home = {
     stateVersion = "23.11";
-    username = lib.mkDefault "zell";
-    homeDirectory = lib.mkForce "/Users/zell";
+    username = lib.mkDefault specialArgs.user;
+    homeDirectory = lib.mkForce specialArgs.homeDirectory;
     packages = import ./home-manager.nix { inherit pkgs; };
   };
 }

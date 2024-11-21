@@ -1,14 +1,10 @@
-{ lib, gitmessage, pkgs, homeDirectory, email, user, ... }: let
+{ lib, pkgs, homeDirectory, email, user, ... }: let
 aliases = import ./aliases.nix;
 in{
   home-manager.users.${user} = {
-    home.file = {
-      "${homeDirectory}/.gitmessage".source = gitmessage;
-    };
     programs.git = {
       aliases = aliases;
       enable = true;
-      extraConfig = { commit = { template = "~/.gitmessage"; }; };
       extraConfig = {
         gpg = { format = "ssh"; };
         "gpg \"ssh\"" = lib.mkIf pkgs.stdenv.isDarwin {

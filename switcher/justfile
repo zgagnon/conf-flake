@@ -100,7 +100,7 @@ tangle-all:
 
 darwin-rebuild: tangle delete-ssh-config
     figlet "Rebuild"
-    darwin-rebuild switch --flake ../flake.nix --fallback
+    darwin-rebuild switch --flake ../flake.nix --fallback --show-trace
 
 install-homebrew:
      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

@@ -1,0 +1,3 @@
+{
+  enableNushellIntegration = true;
+}

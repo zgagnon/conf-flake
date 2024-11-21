@@ -8,7 +8,6 @@ in{
     programs.git = {
       aliases = aliases;
       enable = true;
-      extraConfig = { commit = { template = "~/.gitmessage"; }; };
       extraConfig = {
         gpg = { format = "ssh"; };
         "gpg \"ssh\"" = lib.mkIf pkgs.stdenv.isDarwin {

@@ -24,8 +24,11 @@
     {
       darwinConfigurations."Zells-MacBook-Pro" = darwin.lib.darwinSystem rec {
         system = "aarch64-darwin";
-        modules = import ./hosts/Zells-MacBook-Pro/default.nix {
+        modules = import ./home-manager/default.nix {
           inherit home-manager;
+          homeDirectory = "/Users/zell";
+          user = "zell";
+          email = "zoe.gagnon@mechanical-orchard.com";
           pkgs = nixpkgs.legacyPackages.${system};
           extraPackages = {
             wezterm = wezterm-flake.packages.${system}.default;
