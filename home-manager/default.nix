@@ -11,7 +11,7 @@ let
   system = import ../system user inputs;
   mac = import ../os/mac;
   homebrewPackages = import ./homebrew.nix;
-  homebrew = import ../new-progs/homebrew.nix homebrewPackages;
+  homebrew = import ../os/mac/homebrew.nix homebrewPackages;
   lib = pkgs.lib;
 in
 [
@@ -21,10 +21,10 @@ in
   home-manager.darwinModules.home-manager
   {
     imports = [
-      (import ../new-progs/onep.nix {
+      (import ./program-config/onep.nix {
         inherit homeDirectory lib pkgs user;
       })
-      (import ../new-progs/git.nix {
+      (import ./program-config/git.nix {
         inherit lib pkgs homeDirectory user email;
       })
     ];

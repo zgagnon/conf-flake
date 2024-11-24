@@ -1,38 +1,6 @@
-
-#+title: Config switch script
-#+author: Zoe Gagnon
-#+date:  2024-02-27
-
-* Switcher
-
-This is a utility to help switch to various machine configs. Because
-most configs are written in org and tangled out, simply switching
-won't catch the updates. Its also important to capture those switches
-so that generations and the corresponding config can be linked together
-
-** Entry Script
-#+begin_src bash :tangle switcher :tangle-mode (identity #o755)
-cd "$(dirname "$0")/.." || exit
-
-just -f switcher/justfile "$@"
-#+end_src
-
-** Main build target
-
-#+begin_src just :tangle justfile
 switch: darwin-rebuild commit
-    echo "source ~/.zshrc" | pbcopy
     figlet "State Updates"
-    echo "Run \"source ~/.zshrc\" to pick up the changes"
-#+end_src
 
-** Temp Branch Creation
-
-The switcher operates on a temporary branch. Since system changes
-can take a bit of iteration, this makes sure that ==main== is always
-safe to go back
-
-#+begin_src just :tangle justfile
 branch:
     #!/usr/bin/env sh
     current_branch=$(git branch --show-current)
@@ -56,14 +24,7 @@ branch:
     else
             echo "Not on the 'main' branch. Current branch is: $current_branch"
     fi
-#+end_src
 
-** Deleting externally modified files
-A quick script to speed up switching to a new darwin generation on some Mac machines
-
-Kandji (a tool used by MO) likes to edit this and break nix control. I don't care about the kandji thing,
-so just delete it before we start.
-#+begin_src just :tangle justfile
 delete-ssh-config:
     #!/usr/bin/env sh
     config_file="$HOME/.ssh/config"
@@ -75,23 +36,13 @@ delete-ssh-config:
     else
       echo "No existing SSH config file found."
     fi
-#+end_src
 
-** Tangling the literate config files
-This file is atso the source code for the script (and the flake). All the other source code is in
-similar files. We need to remove the source code from the docs and put it into the appropriate files,
-a process called `tangling` (this style of programming is called [[https://en.wikipedia.org/wiki/Literate_programming][Literate Programming]]). Here, we ask
-git for the list of unstaged modified files, and tangle those specifically. After it finishes, we can stage
-those files.
-
-#+begin_src just :tangle justfile
 tangle: branch
     #!/usr/bin/env sh
     SCRIPT_PATH="${BASH_SOURCE:-$0}"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 
     (
-        cd "$(pwd)/.."
         tangle_org() {
           local file="$1"
           printf "\033[1;34m%s\033[0m\n" "$file"
@@ -121,7 +72,6 @@ tangle-all:
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 
     (
-        cd "$(pwd)/.."
         tangle_org() {
           local file="$1"
           printf "\033[1;34m%s\033[0m\n" "$file"
@@ -143,34 +93,19 @@ tangle-all:
         fi
 
     )
-#+end_src
 
-** Switching to the new generaton
-
-Here we switch to the new generation. This is when the machine is brought in line with the config
-#+begin_src just :tangle justfile
 darwin-rebuild: tangle delete-ssh-config
     figlet "Rebuild"
-    darwin-rebuild switch --flake ../flake.nix --fallback
-#+end_src
+    darwin-rebuild switch --flake . --fallback --show-trace
 
-** Installing homebrew
-#+begin_src just :tangle justfile
 install-homebrew:
      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-#+end_src
 
-** Commit the generation config
-
-Commit the current config. This way, when we roll back to a previous generation, we can
-roll back to the previous config.
-#+begin_src just :tangle justfile
 commit: tangle delete-ssh-config branch
     #!/usr/bin/env sh
     SCRIPT_PATH="${BASH_SOURCE:-$0}"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
     (
-        cd "$(pwd)/.."
         if [[ $(git status --porcelain) ]]; then
             figlet "Commit"
         git add .
@@ -181,13 +116,6 @@ commit: tangle delete-ssh-config branch
           echo "Working directory clean"
         fi
     )
-#+end_src
-
-** Doom
-
-Doom Emacs has its own config
-
-#+begin_src just :tangle justfile
 
 doom-sync:
     figlet "DOOM"
@@ -195,18 +123,9 @@ doom-sync:
 
 doom: doom-sync commit
 
-#+end_src
-
-** Finishing up
-
-When the experimentation is finished, we can safely squash the commit and move back to main
-
-#+begin_src just :tangle justfile
 finish:
-    cd "$(pwd)/.."
     git add .
     git add .
     git ci
     git rebase -i main
     git merge main
-#+end_src

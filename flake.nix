@@ -45,12 +45,18 @@
         #   }
         # ];
       };
-      darwinConfigurations."Zoes-MacBook-Pro" = darwin.lib.darwinSystem {
+      darwinConfigurations."Zoes-MacBook-Pro" = darwin.lib.darwinSystem rec {
         system = "x86_64-darwin";
-        modules = [
-          home-manager.darwinModules.home-manager
-          ./hosts/Zoes-MacBook-Pro/default.nix
-        ];
+        modules = import ./home-manager/default.nix {
+          inherit home-manager;
+          homeDirectory = "/Users/zoe";
+          user = "zoe";
+          email = "zoe@zgagnon.com";
+          pkgs = nixpkgs.legacyPackages.${system};
+          extraPackages = {
+            wezterm = wezterm-flake.packages.${system}.default;
+          };
+        };
       };
     };
 }
