@@ -44,7 +44,6 @@ will be determined by the host name. Each configuration includes home manager, a
       nixpkgs,
       home-manager,
       darwin,
-      emacsng,
       wezterm-flake,
       ...
     }:

@@ -68,6 +68,7 @@ in
   programs.atuin = import ./program-config/atuin.nix;
   programs.zoxide = import ./program-config/zoxide.nix;
   programs.direnv = import ./program-config/direnv.nix;
+  programs.zsh = import ./program-config/zsh.nix;
   home = {
     stateVersion = "23.11";
     username = lib.mkDefault specialArgs.user;

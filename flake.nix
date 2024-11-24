@@ -5,7 +5,6 @@
     home-manager.url = "github:nix-community/home-manager";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    emacsng.url = "github:emacs-ng/emacs-ng";
     wezterm-flake = {
       url = "github:wez/wezterm/main?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +16,6 @@
       nixpkgs,
       home-manager,
       darwin,
-      emacsng,
       wezterm-flake,
       ...
     }:
@@ -34,16 +32,6 @@
             wezterm = wezterm-flake.packages.${system}.default;
           };
         };
-        # modules = [
-        #   home-manager.darwinModules.home-manager
-        #   {
-        #     home-manager.extraSpecialArgs = {
-        #       wezterm = wezterm-flake.packages.${system}.wezterm;
-        #     };
-        #   ./hosts/Zells-MacBook-Pro/default.nix {
-        #       wezterm = wezterm-flake.packages.${system}.wezterm;
-        #   }
-        # ];
       };
       darwinConfigurations."Zoes-MacBook-Pro" = darwin.lib.darwinSystem rec {
         system = "x86_64-darwin";
