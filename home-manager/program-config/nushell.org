@@ -97,6 +97,8 @@
 #+begin_src nix :tangle direnv.nix
 {
   enableNushellIntegration = true;
+  enableZshIntegration = true;
+  enable = true;
 }
 #+end_src
 ** Nushell config
