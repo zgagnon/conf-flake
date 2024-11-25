@@ -46,6 +46,9 @@
       cmd-ctrl-alt-r = "resize smart +100";
 
       cmd-ctrl-alt-i = "mode service";
+
+      cmd-ctrl-alt-shift-1 = "focus-monitor next";
+      cmd-ctrl-alt-shift-2 = "move-node-to-monitor next";
     };
 
     mode.service.binding = {
