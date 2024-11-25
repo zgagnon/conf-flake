@@ -4,14 +4,12 @@ with pkgs;
   _1password
   action-validator
   anki-bin
-  arc-browser
   bat
   cabal-install
   cachix
   coreutils
   csharpier
   direnv
-  discord
   elixir_1_16
   emacs
   emacs-lsp-booster

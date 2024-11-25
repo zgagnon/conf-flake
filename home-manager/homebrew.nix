@@ -5,6 +5,8 @@
     "nikitabobko/tap/aerospace"
     "google-chrome"
     "notion"
+    "discord"
+    "arc"
     "orbstack"
     "raycast"
     "readdle-spark"
