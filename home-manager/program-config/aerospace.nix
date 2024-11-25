@@ -2,7 +2,9 @@
   enable = true;
   settings = {
     after-login-command = [ ];
-    after-startup-command = [ ];
+    after-startup-command = [
+    "exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0"
+    ];
     start-at-login = true;
     enable-normalization-flatten-containers = true;
     enable-normalization-opposite-orientation-for-nested-containers = true;
@@ -64,19 +66,19 @@
         "mode main"
       ];
 
-      alt-shift-h = [
+      alt-shift-left = [
         "join-with left"
         "mode main"
       ];
-      alt-shift-j = [
+      alt-shift-down = [
         "join-with down"
         "mode main"
       ];
-      alt-shift-k = [
+      alt-shift-up = [
         "join-with up"
         "mode main"
       ];
-      alt-shift-l = [
+      alt-shift-right = [
         "join-with right"
         "mode main"
       ];
