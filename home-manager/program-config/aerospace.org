@@ -67,19 +67,19 @@
         "mode main"
       ];
 
-      alt-shift-left = [
+      left = [
         "join-with left"
         "mode main"
       ];
-      alt-shift-down = [
+      down = [
         "join-with down"
         "mode main"
       ];
-      alt-shift-up = [
+      up = [
         "join-with up"
         "mode main"
       ];
-      alt-shift-right = [
+      right = [
         "join-with right"
         "mode main"
       ];
