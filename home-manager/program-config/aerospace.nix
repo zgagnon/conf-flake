@@ -42,13 +42,13 @@
       cmd-ctrl-alt-shift-up = "move up";
       cmd-ctrl-alt-shift-right = "move right";
 
-      cmd-ctrl-alt-shift-r = "resize smart -100";
-      cmd-ctrl-alt-r = "resize smart +100";
+      cmd-ctrl-alt-shift-r = "resize smart +100";
+      cmd-ctrl-alt-r = "resize smart -100";
 
       cmd-ctrl-alt-i = "mode service";
 
-      cmd-ctrl-alt-shift-1 = "focus-monitor next";
-      cmd-ctrl-alt-shift-2 = "move-node-to-monitor next";
+      cmd-ctrl-alt-shift-1 = "focus-monitor next --wrap-around";
+      cmd-ctrl-alt-shift-2 = "move-node-to-monitor next --focus-follows-window --wrap-around";
     };
 
     mode.service.binding = {
