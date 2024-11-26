@@ -14,7 +14,7 @@ in{
           hooksPath = "bin/githooks";
           fsmonitor = "true";
           filemode = "true";
-          editor = "emacsclient -c -a ''";
+          editor = "vi";
         };
         push.autoSetupRemote = false;
         rerere = { enabled = true; };
