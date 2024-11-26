@@ -49,6 +49,7 @@
 
       cmd-ctrl-alt-shift-1 = "focus-monitor next --wrap-around";
       cmd-ctrl-alt-shift-2 = "move-node-to-monitor next --focus-follows-window --wrap-around";
+      cmd-ctrl-alt-shift-3 = "move-node-to-workspace next --focus-follows-window --wrap-around";
     };
 
     mode.service.binding = {
