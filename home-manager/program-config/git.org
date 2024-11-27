@@ -2,15 +2,26 @@
 
 ** The Git Module
 #+begin_src nix :tangle git.nix
-{ lib, pkgs, homeDirectory, email, user, ... }: let
-aliases = import ./aliases.nix;
-in{
+{
+  lib,
+  pkgs,
+  homeDirectory,
+  email,
+  user,
+  ...
+}:
+let
+  aliases = import ./aliases.nix;
+in
+{
   home-manager.users.${user} = {
     programs.git = {
       aliases = aliases;
       enable = true;
       extraConfig = {
-        gpg = { format = "ssh"; };
+        gpg = {
+          format = "ssh";
+        };
         "gpg \"ssh\"" = lib.mkIf pkgs.stdenv.isDarwin {
           program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
         };
@@ -20,8 +31,19 @@ in{
           filemode = "true";
           editor = "vi";
         };
+        mergetool."idea" = {
+          cmd = ''
+            idea merge \
+                            \"$(cd \"$(dirname \"$LOCAL\")\" && pwd)/$(basename \"$LOCAL\")\" \
+                            \"$(cd \"$(dirname \"$REMOTE\")\" && pwd)/$(basename \"$REMOTE\")\" \
+                            \"$(cd \"$(dirname \"$BASE\")\" && pwd)/$(basename \"$BASE\")\" \
+                            \"$(cd \"$(dirname \"$MERGED\")\" && pwd)/$(basename \"$MERGED\")\" \
+          '';
+        };
         push.autoSetupRemote = false;
-        rerere = { enabled = true; };
+        rerere = {
+          enabled = true;
+        };
         column.branch = "auto";
         maintenance.strategy = "incremental";
       };
