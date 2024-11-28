@@ -36,7 +36,6 @@ with pkgs;
   nodePackages.js-beautify
   nodePackages.typescript-language-server
   nodejs
-  omnisharp-roslyn
   pandoc
   pgadmin4-desktopmode
   ripgrep

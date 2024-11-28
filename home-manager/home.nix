@@ -23,6 +23,9 @@ in
   programs.zoxide = import ./program-config/zoxide.nix;
   programs.direnv = import ./program-config/direnv.nix;
   programs.zsh = import ./program-config/zsh.nix;
+  programs.gpg = import ./program-config/gpg.nix;
+
+  services.syncthing.enable = true;
   home = {
     stateVersion = "23.11";
     username = lib.mkDefault specialArgs.user;

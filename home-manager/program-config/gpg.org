@@ -1,0 +1,9 @@
+* Gnu Privacy Guard
+
+Good, pretty, Gnu
+
+#+begin_src nix :tangle gpg.nix
+{
+  enable = true;
+}
+#+end_src

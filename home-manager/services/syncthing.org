@@ -1,0 +1,7 @@
+* Syncthing
+
+#+begin_src nix :tangle syncthing.nix
+{
+  enabled = true;
+}
+#+end_src

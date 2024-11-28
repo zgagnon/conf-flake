@@ -34,14 +34,6 @@ user:
   programs.zsh.enable = true;
   environment.systemPackages = [ pkgs.vim ];
 
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    fira-code-nerdfont
-  ];
-
-  home-manager.users.${user}.services.syncthing = {
-    enable = true;
-  };
   launchd.daemons.linux-builder = {
     serviceConfig = {
       StandardOutPath = "/var/log/darwin-builder.log";
