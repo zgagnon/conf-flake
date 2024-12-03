@@ -30,7 +30,7 @@ with pkgs;
   kubernetes-helm
   lexical
   logseq
-  mob
+  mods
   nil
   nixfmt-rfc-style
   nodePackages.js-beautify
