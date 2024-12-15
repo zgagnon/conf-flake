@@ -48,7 +48,7 @@
       cmd-ctrl-alt-i = "mode service";
 
       cmd-ctrl-alt-shift-1 = "focus-monitor next --wrap-around";
-      cmd-ctrl-alt-shift-3 = "focus-monitor next --wrap-around";
+      cmd-ctrl-alt-shift-3 = "focus-workspace next --wrap-around";
       cmd-ctrl-alt-shift-7 = "move-node-to-monitor next --focus-follows-window --wrap-around";
       cmd-ctrl-alt-shift-9 = "move-node-to-workspace next --focus-follows-window --wrap-around";
     };
