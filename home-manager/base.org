@@ -145,7 +145,6 @@ These packages are installed via homebrew
   brews = [ "exercism" ];
 
   casks = [
-    "nikitabobko/tap/aerospace"
     "google-chrome"
     "notion"
     "discord"

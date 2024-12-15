@@ -2,7 +2,6 @@
   brews = [ "exercism" ];
 
   casks = [
-    "nikitabobko/tap/aerospace"
     "google-chrome"
     "notion"
     "discord"
