@@ -30,6 +30,11 @@ in
     stateVersion = "23.11";
     username = lib.mkDefault specialArgs.user;
     homeDirectory = lib.mkForce specialArgs.homeDirectory;
+    file = {
+      ".config/ghostty/config" = {
+        source = files/ghostty;
+      };
+    };
     packages = (
       import ./home-manager.nix {
         inherit pkgs;
