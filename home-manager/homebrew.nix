@@ -18,5 +18,6 @@
     "skype"
     "microsoft-teams"
     "soundsource"
+    "ghostty"
   ];
 }

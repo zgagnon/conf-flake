@@ -30,6 +30,10 @@ in
     stateVersion = "23.11";
     username = lib.mkDefault specialArgs.user;
     homeDirectory = lib.mkForce specialArgs.homeDirectory;
-    packages = import ./home-manager.nix { inherit pkgs; };
+    packages = (
+      import ./home-manager.nix {
+        inherit pkgs;
+      }
+    );
   };
 }
