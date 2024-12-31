@@ -1,29 +1,5 @@
-switch: darwin-rebuild commit
+switch: darwin-rebuild tangle delete-ssh-config
     figlet "State Updates"
-
-branch:
-    #!/usr/bin/env sh
-    current_branch=$(git branch --show-current)
-
-    # Get today's date in YYYY-MM-DD format
-    today=$(date +%Y-%m-%d)
-
-    # Check if the current branch is 'main'
-    if [ "$current_branch" == "main" ]; then
-            figlet "Branch"
-            # Get the current branch name
-            current_branch=$(git branch --show-current)
-
-            # Get today's date in YYYY-MM-DD format
-            today=$(date +%Y-%m-%d)
-
-            # Create a new branch with the name 'noodling-YYYY-MM-DD'
-            new_branch="noodling-$today"
-            git checkout -b "$new_branch"
-            echo "Created and switched to new branch: $new_branch"
-    else
-            echo "Not on the 'main' branch. Current branch is: $current_branch"
-    fi
 
 delete-ssh-config:
     #!/usr/bin/env sh
@@ -37,7 +13,7 @@ delete-ssh-config:
       echo "No existing SSH config file found."
     fi
 
-tangle: branch
+tangle:
     #!/usr/bin/env sh
     SCRIPT_PATH="${BASH_SOURCE:-$0}"
     SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
@@ -97,35 +73,3 @@ tangle-all:
 darwin-rebuild: tangle delete-ssh-config
     figlet "Rebuild"
     darwin-rebuild switch --flake . --fallback --show-trace
-
-install-homebrew:
-     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-commit: tangle delete-ssh-config branch
-    #!/usr/bin/env sh
-    SCRIPT_PATH="${BASH_SOURCE:-$0}"
-    SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
-    (
-        if [[ $(git status --porcelain) ]]; then
-            figlet "Commit"
-        git add .
-        git add .
-        commit_message=$(date)
-        git commit -m "$commit_message"
-        else
-          echo "Working directory clean"
-        fi
-    )
-
-doom-sync:
-    figlet "DOOM"
-    doom sync
-
-doom: doom-sync commit
-
-finish:
-    git add .
-    git add .
-    git ci
-    git rebase -i main
-    git merge main
