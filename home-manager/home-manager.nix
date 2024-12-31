@@ -44,6 +44,7 @@ with pkgs;
   stgit
   stylelint
   terraform
+  thefuck
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
   vscodium
