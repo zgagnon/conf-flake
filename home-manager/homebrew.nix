@@ -3,6 +3,7 @@
 
   casks = [
     "google-chrome"
+   "nikitabobko/tap/aerospace"
     "notion"
     "discord"
     "arc"
