@@ -3,6 +3,7 @@ with pkgs;
 [
   _1password
   action-validator
+  aider-chat
   anki-bin
   bat
   cabal-install
