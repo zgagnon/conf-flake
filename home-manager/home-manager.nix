@@ -10,7 +10,7 @@ with pkgs;
   coreutils
   csharpier
   direnv
-  elixir_1_16
+  elixir
   emacs
   emacs-lsp-booster
   erlfmt

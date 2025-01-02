@@ -13,9 +13,9 @@ in
   ];
   # inherit programs;
   programs.aerospace = import ./program-config/aerospace.nix;
-  programs.wezterm = import ./program-config/wezterm.nix {
-    package = specialArgs.extraPackages.wezterm;
-  };
+  # programs.wezterm = import ./program-config/wezterm.nix {
+  #   package = specialArgs.extraPackages.wezterm;
+  # };
   programs.nushell = import ./program-config/nushell.nix;
   programs.starship = import ./program-config/starship.nix { inherit lib; };
   programs.carapace = import ./program-config/carapace.nix;
