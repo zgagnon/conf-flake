@@ -9,6 +9,7 @@
       url = "github:wez/wezterm/main?dir=nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lexical.url = "github:lexical-lsp/lexical";
   };
   outputs =
     {
@@ -17,6 +18,7 @@
       home-manager,
       darwin,
       wezterm-flake,
+      lexical,
       ...
     }:
     {
@@ -29,6 +31,7 @@
           email = "zoe.gagnon@mechanical-orchard.com";
           pkgs = nixpkgs.legacyPackages.${system};
           extraPackages = {
+            lexical = lexical.packages.${system}.default;
             wezterm = wezterm-flake.packages.${system}.default;
           };
         };

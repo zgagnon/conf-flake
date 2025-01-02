@@ -83,7 +83,8 @@ in
     };
     packages = (
       import ./home-manager.nix {
-        inherit pkgs;
+        inherit pkgs ;
+        extraPackages = specialArgs.extraPackages;
       }
     );
   };
@@ -94,10 +95,11 @@ in
 These packages are installed via nix itself
 
 #+begin_src nix :tangle ./home-manager.nix
-{ pkgs, ... }:
+{ pkgs, extraPackages,... }:
 with pkgs;
 [
-  _1password
+  extraPackages.lexical
+  _1password-cli
   action-validator
   aider-chat
   anki-bin
@@ -107,7 +109,7 @@ with pkgs;
   coreutils
   csharpier
   direnv
-  elixir
+  elixir_1_17
   emacs
   emacs-lsp-booster
   erlfmt
@@ -125,7 +127,6 @@ with pkgs;
   just
   kubectx
   kubernetes-helm
-  lexical
   logseq
   mods
   nil

@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, extraPackages,... }:
 with pkgs;
 [
-  _1password
+  extraPackages.lexical
+  _1password-cli
   action-validator
   aider-chat
   anki-bin
@@ -11,7 +12,7 @@ with pkgs;
   coreutils
   csharpier
   direnv
-  elixir
+  elixir_1_17
   emacs
   emacs-lsp-booster
   erlfmt
@@ -29,7 +30,6 @@ with pkgs;
   just
   kubectx
   kubernetes-helm
-  lexical
   logseq
   mods
   nil

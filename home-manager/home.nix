@@ -37,7 +37,8 @@ in
     };
     packages = (
       import ./home-manager.nix {
-        inherit pkgs;
+        inherit pkgs ;
+        extraPackages = specialArgs.extraPackages;
       }
     );
   };
