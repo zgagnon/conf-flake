@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   enable = true;
   autosuggestion.enable = true;
@@ -19,6 +20,7 @@
     "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
     ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake/switcher"''
     ''export AUTO_ENABLE_FLAKES=true''
+    ''eval "$(/opt/homebrew/bin/brew shellenv)"''
     "export EDITOR=em"
   ];
   history = {

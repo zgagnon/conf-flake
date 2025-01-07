@@ -11,6 +11,7 @@ vim: over-ridden to always be nvim for muscle memory
 em: launch the emacs client, this short be the default way to launch itself
 Toss doom into the PATH so we can update the emacs config from anywhere
 #+begin_src nix
+{ config, ... }:
 {
   enable = true;
   autosuggestion.enable = true;
@@ -32,6 +33,7 @@ Toss doom into the PATH so we can update the emacs config from anywhere
     "alias emacs-restart=\"launchctl stop emacs_work && launchctl start emacs_work\""
     ''export PATH="$PATH:$HOME/.config/emacs/bin:$HOME/darwin-flake/switcher"''
     ''export AUTO_ENABLE_FLAKES=true''
+    ''eval "$(/opt/homebrew/bin/brew shellenv)"''
     "export EDITOR=em"
   ];
   history = {

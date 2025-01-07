@@ -22,7 +22,7 @@ in
   programs.atuin = import ./program-config/atuin.nix;
   programs.zoxide = import ./program-config/zoxide.nix;
   programs.direnv = import ./program-config/direnv.nix;
-  programs.zsh = import ./program-config/zsh.nix;
+  programs.zsh = import ./program-config/zsh.nix {inherit config;};
   programs.gpg = import ./program-config/gpg.nix;
 
   services.syncthing.enable = true;
