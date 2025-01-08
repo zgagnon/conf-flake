@@ -49,4 +49,5 @@ with pkgs;
   tree-sitter
   tree-sitter-grammars.tree-sitter-heex
   vscodium
+  zellij
 ]
