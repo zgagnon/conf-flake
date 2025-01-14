@@ -12,6 +12,7 @@
     "readdle-spark"
     "slack"
     "spotify"
+    "logseq"
     "tandem"
     "tuple"
     "warp"

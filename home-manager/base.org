@@ -123,10 +123,10 @@ with pkgs;
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
+  jujutsu
   just
   kubectx
   kubernetes-helm
-  logseq
   mods
   nil
   nixfmt-rfc-style
@@ -167,6 +167,7 @@ These packages are installed via homebrew
     "readdle-spark"
     "slack"
     "spotify"
+    "logseq"
     "tandem"
     "tuple"
     "warp"
