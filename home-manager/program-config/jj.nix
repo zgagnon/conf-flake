@@ -6,9 +6,6 @@
   user,
   ...
 }:
-let
-  aliases = import ./aliases.nix;
-in
 {
   home-manager.users.${user} = {
     programs.jujutsu = {
@@ -19,10 +16,12 @@ in
           name = "Zoe Gagnon";
         };
         aliases = {
-          heads = ["log" "-r" "'heads(all())'"];
+          heads = ["log" "-r" "visible_heads()" "--no-pager"];
+
         };
         ui = {
           editor = "nix run nixpkgs#emacs -- -nw";
+          default-command = ["heads"];
         };
       };
     };
