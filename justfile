@@ -24,16 +24,14 @@ tangle:
           printf "\033[1;34m%s\033[0m\n" "$file"
           emacs --batch --load org --eval "(org-babel-tangle-file \"$file\")"
         }
-        git_changes=$(git status | grep '\.org$')
+        jj_changes=$(jj show --name-only --no-pager | grep '\.org$')
 
-        echo "$git_changes"
+        echo "$jj_changes"
 
-        if [ -n "${git_changes[*]}" ]; then
+        if [ -n "${jj_changes[*]}" ]; then
             figlet "Tangle"
-            for file in $(git diff --name-only --diff-filter=M | grep '\.org$'); do
+            for file in $jj_changes; do
                 tangle_org "$file"
-    
-                git add .
             done
         else
           echo "No files to tangle"

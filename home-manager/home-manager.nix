@@ -27,7 +27,6 @@ with pkgs;
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
-  jujutsu
   just
   kubectx
   kubernetes-helm

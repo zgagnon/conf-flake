@@ -21,8 +21,10 @@ in
         aliases = {
           heads = ["log" "-r" "'heads(all())'"];
         };
+        ui = {
+          editor = "nix run nixpkgs#emacs -- -nw";
+        };
       };
-
     };
   };
 }

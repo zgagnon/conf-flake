@@ -1,3 +1,7 @@
+* Jujutsu VCS
+
+** The Jujutsu Module
+#+begin_src nix :tangle jj.nix
 {
   lib,
   pkgs,
@@ -21,8 +25,11 @@ in
         aliases = {
           heads = ["log" "-r" "'heads(all())'"];
         };
+        ui = {
+          editor = "nix run nixpkgs#emacs -- -nw";
+        };
       };
-
     };
   };
 }
+#+end_src

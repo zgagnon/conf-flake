@@ -27,6 +27,9 @@ in
       (import ./program-config/git.nix {
         inherit lib pkgs homeDirectory user email;
       })
+      (import ./program-config/jj.nix {
+        inherit lib pkgs homeDirectory user email;
+      })
     ];
     home-manager.extraSpecialArgs = {
       inherit extraPackages homeDirectory user email;
