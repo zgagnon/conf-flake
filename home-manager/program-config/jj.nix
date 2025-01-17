@@ -21,7 +21,7 @@
         };
         ui = {
           editor = "nix run nixpkgs#emacs -- -nw";
-          default-command = ["heads"];
+          default-command = ["log" "--no-pager"];
         };
       };
     };
