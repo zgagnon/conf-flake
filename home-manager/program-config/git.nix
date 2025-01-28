@@ -43,6 +43,7 @@ in
         column.branch = "auto";
         maintenance.strategy = "incremental";
       };
+      lfs = {enable = true;};
       userName = "zgagnon";
       userEmail = email;
     };

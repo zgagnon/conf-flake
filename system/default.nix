@@ -8,7 +8,6 @@ user:
     config.allowUnfree = true;
   };
   nix = {
-    linux-builder.enable = true;
     package = pkgs.nixVersions.latest;
     settings = {
       trusted-users = [ "@admin" ];

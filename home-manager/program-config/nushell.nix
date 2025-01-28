@@ -12,6 +12,9 @@
         nu -c $output
     }
     
+    jj util completion nushell | save completions-jj.nu
+    
+    
     if (ls ~/.ai.env.toml | is-not-empty ) {
     print "Loading AI env vars...";
     open ~/.ai.env.toml | load-env; }

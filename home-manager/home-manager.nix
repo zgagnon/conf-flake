@@ -1,4 +1,9 @@
 { pkgs, extraPackages,... }:
+let
+gdk = pkgs.google-cloud-sdk.withExtraComponents (with pkgs.google-cloud-sdk.components; [
+    gke-gcloud-auth-plugin
+  ]);
+in
 with pkgs;
 [
   extraPackages.lexical
@@ -23,7 +28,7 @@ with pkgs;
   fira-code
   gh
   gnugrep
-  google-cloud-sdk
+  gdk
   haskellPackages.hoogle
   haskellPackages.lsp
   jetbrains.idea-community
