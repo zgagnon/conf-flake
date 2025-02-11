@@ -29,7 +29,6 @@ user:
       '';
   };
 
-  services.nix-daemon.enable = true;
 
   programs.zsh.enable = true;
   environment.systemPackages = [ pkgs.vim ];

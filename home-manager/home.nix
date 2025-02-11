@@ -8,9 +8,6 @@ let
   lib = pkgs.lib;
 in
 {
-  imports = [
-    ./modules/aerospace.nix
-  ];
   # inherit programs;
   programs.aerospace = import ./program-config/aerospace.nix;
   # programs.wezterm = import ./program-config/wezterm.nix {

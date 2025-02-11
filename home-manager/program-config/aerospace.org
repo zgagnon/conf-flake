@@ -1,7 +1,7 @@
 #+begin_src nix :tangle aerospace.nix
 {
   enable = true;
-  settings = {
+  userSettings = {
     after-login-command = [ ];
     after-startup-command = [
       "exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0"

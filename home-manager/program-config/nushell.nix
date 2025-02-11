@@ -12,7 +12,7 @@
         nu -c $output
     }
     
-    jj util completion nushell | save completions-jj.nu
+    jj util completion nushell | save -f completions-jj.nu
     
     
     if (ls ~/.ai.env.toml | is-not-empty ) {
