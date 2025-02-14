@@ -12,6 +12,8 @@
         nu -c $output
     }
     
+    alias edit = emacs -nw
+    
     jj util completion nushell | save -f completions-jj.nu
     
     
