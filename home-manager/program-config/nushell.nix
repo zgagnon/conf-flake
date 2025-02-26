@@ -1,7 +1,9 @@
 {
   enable = true;
   extraConfig = ''
-    $env.PATH = ($env.PATH | split row (char esep) | append '$nu.home-path/.config/emacs/bin')
+    $env.PATH = ($env.PATH | split row (char esep) |
+      append '$nu.home-path/.config/emacs/bin' |
+      append '$nu.home-path/.npm-global/bin')
     
     def fuck [] {
         $env.THEFUCK_REQUIRE_CONFIRMATION = false

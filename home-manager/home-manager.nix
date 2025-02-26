@@ -18,7 +18,7 @@ with pkgs;
   csharpier
   direnv
   elixir_1_17
-  emacs
+  emacs30
   emacs-lsp-booster
   erlfmt
   eza
