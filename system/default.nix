@@ -7,27 +7,28 @@ user:
   nixpkgs = {
     config.allowUnfree = true;
   };
-  nix = {
-    package = pkgs.nixVersions.latest;
-    settings = {
-      trusted-users = [ "@admin" ];
-      auto-optimise-store = false;
-      substituters = [ "https://cache.iog.io" ];
-      trusted-public-keys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-      extra-trusted-users = [
-        "@admin"
-        user
-      ];
-    };
+  nix.enable = false;
+  # nix = {
+  #   package = pkgs.nixVersions.latest;
+  #   settings = {
+  #     trusted-users = [ "@admin" ];
+  #     auto-optimise-store = false;
+  #     substituters = [ "https://cache.iog.io" ];
+  #     trusted-public-keys = [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+  #     extra-trusted-users = [
+  #       "@admin"
+  #       user
+  #     ];
+  #   };
 
-    extraOptions =
-      ''
-        experimental-features = nix-command flakes
-      ''
-      + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-        extra-platforms = x86_64-darwin aarch64-darwin
-      '';
-  };
+  #   extraOptions =
+  #     ''
+  #       experimental-features = nix-command flakes
+  #     ''
+  #     + lib.optionalString (pkgs.system == "aarch64-darwin") ''
+  #       extra-platforms = x86_64-darwin aarch64-darwin
+  #     '';
+  # };
 
 
   programs.zsh.enable = true;
