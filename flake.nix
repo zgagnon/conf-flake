@@ -5,11 +5,11 @@
     home-manager.url = "github:nix-community/home-manager";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    wezterm-flake = {
-      url = "github:wez/wezterm/main?dir=nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    lexical.url = "github:lexical-lsp/lexical";
+    # wezterm-flake = {
+    #   url = "github:wez/wezterm/main?dir=nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+    # lexical.url = "github:lexical-lsp/lexical";
   };
   outputs =
     {
@@ -17,8 +17,8 @@
       nixpkgs,
       home-manager,
       darwin,
-      wezterm-flake,
-      lexical,
+      # wezterm-flake,
+      # lexical,
       ...
     }:
     {
@@ -31,8 +31,8 @@
           email = "zoe.gagnon@mechanical-orchard.com";
           pkgs = nixpkgs.legacyPackages.${system};
           extraPackages = {
-            lexical = lexical.packages.${system}.default;
-            wezterm = wezterm-flake.packages.${system}.default;
+            # lexical = lexical.packages.${system}.default;
+            # wezterm = wezterm-flake.packages.${system}.default;
           };
         };
       };
@@ -45,7 +45,7 @@
           email = "zoe@zgagnon.com";
           pkgs = nixpkgs.legacyPackages.${system};
           extraPackages = {
-            wezterm = wezterm-flake.packages.${system}.default;
+            # wezterm = wezterm-flake.packages.${system}.default;
           };
         };
       };

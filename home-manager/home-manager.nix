@@ -6,7 +6,7 @@ gdk = pkgs.google-cloud-sdk.withExtraComponents (with pkgs.google-cloud-sdk.comp
 in
 with pkgs;
 [
-  extraPackages.lexical
+  # extraPackages.lexical
   _1password-cli
   action-validator
   aider-chat
